@@ -1,6 +1,51 @@
 import Head from "next/head";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
+    const [results, setResults] = useState("");
+    const [exact, setExact] = useState(false);
+
+    const inputRef = useRef(null);
+    let timeout;
+
+    const getResults = (keyword) => {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(async () => {
+            if (keyword.trim() === "") {
+                setResults("");
+                return;
+            }
+
+            let response = await fetch("/api/matchKeyword", {
+                headers: { keyword, exact },
+            });
+
+            let { possibleCards } = await response.json();
+
+            setResults(possibleCards);
+        }, 500);
+    };
+
+    useEffect(() => {
+        const getData = async (keyword) => {
+            if (keyword.trim() === "") {
+                setResults("");
+                return;
+            }
+
+            let response = await fetch("/api/matchKeyword", {
+                headers: { keyword, exact },
+            });
+
+            let { possibleCards } = await response.json();
+
+            setResults(possibleCards);
+        };
+
+        getData(inputRef.current.value);
+    }, [exact]);
+
     return (
         <div>
             <Head>
@@ -12,8 +57,41 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="flex items-center justify-center w-screen h-screen bg-slate-600">
-                <div>BONJOUR</div>
+            <div className="flex flex-col items-center justify-center w-screen h-screen gap-4 bg-slate-600">
+                <div className="flex items-center justify-center gap-4">
+                    <input
+                        ref={inputRef}
+                        className="px-4 py-2"
+                        type="text"
+                        onChange={(e) => getResults(e.target.value)}
+                    />
+
+                    <input
+                        type="checkbox"
+                        value={exact}
+                        onChange={() => setExact(!exact)}
+                    />
+                </div>
+
+                {results !== "" ? (
+                    <div className="flex flex-col gap-1">
+                        {results === "not-found" ? (
+                            <div className="w-full px-2 py-1 bg-red-700 text-white">
+                                No results
+                            </div>
+                        ) : (
+                            <>
+                                {results.map((singleResult, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-full p-2 bg-blue-700">
+                                        {singleResult}
+                                    </div>
+                                ))}
+                            </>
+                        )}
+                    </div>
+                ) : null}
             </div>
         </div>
     );
