@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
+import { server } from "../config";
+import Router from "next/router";
 
 export default function Home() {
     const [results, setResults] = useState("");
@@ -46,6 +48,20 @@ export default function Home() {
         getData(inputRef.current.value);
     }, [exact]);
 
+    async function openDetails(cardName) {
+        let response = await fetch("/api/getCardId", {
+            headers: { cardName },
+        });
+
+        let { cardId } = await response.json();
+
+        if (cardId === "not-found") {
+            return;
+        }
+
+        Router.push(`/${cardId}`);
+    }
+
     return (
         <div>
             <Head>
@@ -84,7 +100,10 @@ export default function Home() {
                                 {results.map((singleResult, index) => (
                                     <div
                                         key={index}
-                                        className="w-full p-2 bg-blue-700">
+                                        className="w-full p-2 bg-blue-700"
+                                        onClick={() => {
+                                            openDetails(singleResult);
+                                        }}>
                                         {singleResult}
                                     </div>
                                 ))}
