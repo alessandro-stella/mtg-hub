@@ -9,7 +9,7 @@ export default function SingleCard({ cardData }) {
 
             <div className="flex flex-wrap gap-4">
                 {cardData.map((singleCard) => (
-                    <div>
+                    <div key={singleCard.oracle_id}>
                         <div className="pb-2">{singleCard.set_name}</div>
                         <img src={singleCard.image_uris.png} className="h-96" />
                     </div>
