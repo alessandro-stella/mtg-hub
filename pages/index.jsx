@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
-import { server } from "../config";
 import Router from "next/router";
 
 export default function Home() {
@@ -92,7 +91,7 @@ export default function Home() {
                 {results !== "" ? (
                     <div className="flex flex-col gap-1">
                         {results === "not-found" ? (
-                            <div className="w-full px-2 py-1 bg-red-700 text-white">
+                            <div className="w-full px-2 py-1 text-white bg-red-700">
                                 No results
                             </div>
                         ) : (
@@ -100,7 +99,7 @@ export default function Home() {
                                 {results.map((singleResult, index) => (
                                     <div
                                         key={index}
-                                        className="w-full p-2 bg-blue-700"
+                                        className="w-full p-2 bg-blue-700 cursor-pointer hover:bg-blue-500 transition-all"
                                         onClick={() => {
                                             openDetails(singleResult);
                                         }}>
