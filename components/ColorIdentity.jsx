@@ -6,8 +6,8 @@ export default function ColorIdentity({ identity }) {
             <div className="mr-2 text-2xl">Color identity:</div>
             {identity.length !== 0 ? (
                 <>
-                    {identity.map((symbol) => (
-                        <Symbol symbol={`{${symbol}}`} />
+                    {identity.map((symbol, index) => (
+                        <Symbol symbol={`{${symbol}}`} key={index}/>
                     ))}
                 </>
             ) : (
