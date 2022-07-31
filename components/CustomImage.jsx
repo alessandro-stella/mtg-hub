@@ -15,7 +15,7 @@ export default function CustomImage({ imageData }) {
             src={src}
             alt={imageData.name}
             className="h-96"
-            onLoadingComplete={() => setSrc(imageData.image_uris.png)}
+            onLoadingComplete={() => setSrc(imageData.images.small)}
             onError={() => setSrc(fallback)}
         />
     );

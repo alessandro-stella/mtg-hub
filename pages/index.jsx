@@ -72,7 +72,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="flex flex-col items-center justify-center w-screen h-screen gap-4 bg-slate-600">
+            <div className="flex flex-col items-center justify-center w-screen h-screen gap-4 bg-slate-600 md:bg-red-600">
                 <div className="flex items-center justify-center gap-4">
                     <input
                         ref={inputRef}

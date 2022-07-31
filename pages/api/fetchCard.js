@@ -7,7 +7,19 @@ export default async function fetchCard(req, res) {
 
     fetchResponse = await fetchResponse.json();
 
-    return res
-        .status(200)
-        .json(fetchResponse.status === 404 ? "not-found" : fetchResponse);
+    let cardData = fetchResponse.data.map((singleCard) => {
+        return {
+            id: singleCard.id,
+            name: singleCard.name,
+            images: singleCard.image_uris,
+            set: singleCard.set_name,
+        };
+    });
+
+    return res.status(200).json({
+        data:
+            fetchResponse.status === 404
+                ? "not-found"
+                : cardData,
+    });
 }
