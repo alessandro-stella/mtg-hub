@@ -1,31 +1,62 @@
 import { server } from "../config";
 import CustomImage from "../components/CustomImage";
+import SymbolContainer from "../components/SymbolContainer";
+import ColorIdentity from "../components/ColorIdentity";
+import Head from "next/head";
 
 export default function SingleCard({ cardData }) {
-    console.table(cardData);
-
     return (
-        <div className="flex flex-col h-screen gap-4 p-4">
-            <div className="text-4xl">{cardData[0].name}</div>
+        <>
+            <Head>
+                <title>MTG Hub - {cardData.name}</title>
+            </Head>
 
-            <div className="flex flex-wrap h-full gap-4">
-                {cardData.map((singleCard) => (
-                    <div key={singleCard.id}>
-                        <div className="pb-2">{singleCard.set}</div>
-                        <div className="relative w-60 h-80">
-                            <CustomImage imageData={singleCard} />
-                        </div>
+            <div className="flex flex-col min-h-screen gap-1 p-4 h-fit">
+                <div className="text-4xl font-bold">{cardData.name}</div>
+
+                <div className="flex flex-col gap-4 p-2 bg-green-300 border-2 border-green-900 h-1/2">
+                    <div className="relative min-h-[30rem]">
+                        <CustomImage
+                            cardName={cardData.name}
+                            imageData={cardData.images}
+                            large={true}
+                        />
                     </div>
-                ))}
+
+                    <SymbolContainer symbols={cardData.manaCost} />
+
+                    <ColorIdentity identity={cardData.identity} />
+                </div>
+
+                <div className="mt-4 text-2xl font-bold">Reprints</div>
+
+                <div className="card-grid">
+                    {cardData.reprints.map((singleReprint, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col gap-2 p-2 bg-blue-300 border-2 border-blue-900 h-fit">
+                            <div className="relative w-full min-h-[15em]">
+                                <CustomImage
+                                    cardName={cardData.name}
+                                    imageData={singleReprint.image}
+                                />
+                            </div>
+
+                            <div className="text-center">
+                                {singleReprint.set}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
 export async function getServerSideProps(context) {
     const { cardId } = context.query;
 
-    let cardData = await fetch(`${server}/api/fetchCard`, {
+    let cardData = await fetch(`${server}/api/fetchCards`, {
         headers: { cardId },
     });
 

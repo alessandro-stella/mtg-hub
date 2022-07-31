@@ -62,7 +62,7 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <>
             <Head>
                 <title>MTG Hub</title>
                 <meta
@@ -73,6 +73,8 @@ export default function Home() {
             </Head>
 
             <div className="flex flex-col items-center justify-center w-screen h-screen gap-4 bg-slate-600 md:bg-red-600">
+                <div className="text-6xl font-bold">MTG Hub</div>
+
                 <div className="flex items-center justify-center gap-4">
                     <input
                         ref={inputRef}
@@ -111,6 +113,6 @@ export default function Home() {
                     </div>
                 ) : null}
             </div>
-        </div>
+        </>
     );
 }

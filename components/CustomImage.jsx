@@ -1,21 +1,21 @@
 import Image from "next/dist/client/image";
 import { useState } from "react";
-import loading from "../public/loading.png";
-import fallback from "../public/error.png";
+import loading from "../assets/loading.png";
+import fallback from "../assets/error.png";
 
-export default function CustomImage({ imageData }) {
+export default function CustomImage({ cardName, imageData, large }) {
     const [src, setSrc] = useState(loading);
-    /* const [errorSrc, setErrorSrc] = useState(false);
-    const [hasLoaded, setHasLoaded] = useState(false); */
 
     return (
         <Image
-            priority={true}
+            priority={large || false}
             layout="fill"
+            objectFit="contain"
             src={src}
-            alt={imageData.name}
-            className="h-96"
-            onLoadingComplete={() => setSrc(imageData.images.small)}
+            alt={cardName || "Error"}
+            onLoadingComplete={() =>
+                setSrc(large ? imageData.png : imageData.small)
+            }
             onError={() => setSrc(fallback)}
         />
     );

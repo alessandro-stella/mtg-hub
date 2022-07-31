@@ -9,5 +9,7 @@ export default async function getCardId(req, res) {
 
     let cardId = fetchedCard.oracle_id;
 
-    return res.status(200).json({ cardId: cardId || "not-found" });
+    return res.status(200).json({
+        cardId: cardId || "not-found",
+    });
 }
