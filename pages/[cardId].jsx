@@ -31,8 +31,6 @@ export async function getServerSideProps(context) {
 
     cardData = await cardData.json();
 
-    console.log(cardData);
-
     if (cardData === "not-found") {
         return {
             redirect: {
