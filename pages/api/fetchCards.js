@@ -6,7 +6,6 @@ export default async function fetchCards(req, res) {
     );
 
     fetchResponse = await fetchResponse.json();
-    console.log(fetchResponse);
 
     let proxyCard = fetchResponse.data[0];
 
@@ -30,7 +29,7 @@ export default async function fetchCards(req, res) {
                 set: singleCard.set_name,
                 setCode: singleCard.set,
                 collectorNumber: singleCard.collector_number,
-                image: singleCard.image_uris,
+                image: { small: singleCard.image_uris.small },
             };
         }),
     };
