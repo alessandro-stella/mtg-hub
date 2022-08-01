@@ -4,8 +4,12 @@ import SymbolContainer from "../components/SymbolContainer";
 import ColorIdentity from "../components/ColorIdentity";
 import Head from "next/head";
 import Router from "next/router";
+import DoubleFacedImage from "../components/DoubleFacedImage";
 
 export default function SingleCard({ cardData }) {
+    const isDoubleFaced = cardData.images.hasOwnProperty("front");
+    console.log({ cardData });
+
     function openReprint(setCode, collectorNumber) {
         if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
             collectorNumber = collectorNumber.slice(0, -1) + "-star";
@@ -24,15 +28,25 @@ export default function SingleCard({ cardData }) {
                 <div className="text-4xl font-bold">{cardData.name}</div>
 
                 <div className="flex flex-col gap-4 p-2 bg-green-300 border-2 border-green-900 h-1/2">
-                    <div className="relative min-h-[30rem]">
-                        <CustomImage
-                            cardName={cardData.name}
-                            imageData={cardData.images}
-                            large={true}
-                        />
+                    <div className="relative min-h-[30rem] h-full">
+                        {!isDoubleFaced ? (
+                            <CustomImage
+                                cardName={cardData.name}
+                                imageData={cardData.images}
+                                large={true}
+                            />
+                        ) : (
+                            <DoubleFacedImage
+                                cardName={cardData.name}
+                                images={cardData.images}
+                                large={true}
+                            />
+                        )}
                     </div>
 
-                    <SymbolContainer symbols={cardData.manaCost} />
+                    {cardData.manaCost && (
+                        <SymbolContainer symbols={cardData.manaCost} />
+                    )}
 
                     <ColorIdentity identity={cardData.identity} />
                 </div>
@@ -51,10 +65,23 @@ export default function SingleCard({ cardData }) {
                             key={index}
                             className="flex flex-col gap-2 p-2 transition bg-blue-500 border-2 border-blue-900 cursor-pointer h-fit hover:bg-blue-300">
                             <div className="relative w-full min-h-[15em]">
-                                <CustomImage
-                                    cardName={cardData.name}
-                                    imageData={singleReprint.image}
-                                />
+                                {!isDoubleFaced ? (
+                                    <CustomImage
+                                        cardName={cardData.name}
+                                        imageData={singleReprint.image}
+                                    />
+                                ) : (
+                                    <>
+                                        <CustomImage
+                                            cardName={cardData.name}
+                                            imageData={cardData.images.front}
+                                        />
+                                        <CustomImage
+                                            cardName={cardData.name}
+                                            imageData={cardData.images.back}
+                                        />
+                                    </>
+                                )}
                             </div>
 
                             <div className="text-center">

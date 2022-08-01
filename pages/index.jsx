@@ -110,24 +110,29 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center w-3/4 max-w-xl gap-4">
+                <div className="flex flex-col items-center justify-center w-3/4 max-w-xl gap-4">
                     <input
                         ref={inputRef}
-                        className="flex-1 px-4 py-2"
+                        className="w-full px-4 py-2"
                         type="text"
                         onChange={(e) => getResults(e.target.value)}
                     />
 
-                    <input
-                        type="checkbox"
-                        value={exact}
-                        onChange={() => setExact(!exact)}
-                    />
+                    <div className="flex items-center justify-center w-full gap-4 text-white">
+                        <div className="text-2xl">Exact match</div>
+                        <div
+                            onClick={() => setExact(!exact)}
+                            className={`text-xl bg-${
+                                exact ? "emerald" : "red"
+                            }-600 select-none cursor-pointer hover:brightness-125 font-bold px-2 py-1 rounded-md border-2 transition-all  grid place-items-center`}>
+                            {exact ? "ON" : "OFF"}
+                        </div>
+                    </div>
                 </div>
 
                 {results !== "" ? (
                     <div
-                        className={`flex flex-col gap-2  max-h-[30em] overflow-auto w-3/4 max-w-sm relative ${
+                        className={`  p-2 border-2 rounded-lg flex flex-col gap-2  max-h-[30em] overflow-auto w-3/4 max-w-sm relative ${
                             hasScrollbar ? "pr-2" : ""
                         }`}
                         ref={resultsRef}>
@@ -136,15 +141,20 @@ export default function Home() {
                         ) : (
                             <>
                                 {results === "not-found" ? (
-                                    <div className="rounded-md font-bold px-8 py-2 text-2xl text-center w-fit m-auto text-white bg-red-500 border-red-700 border-2">
+                                    <div className="px-8 py-2 w-full text-2xl font-bold text-center text-white bg-red-500 border-2 border-red-700 rounded-md ">
                                         NO MATCHES
                                     </div>
                                 ) : (
                                     <>
+                                        <div className="text-2xl font-bold text-white">
+                                            {exact
+                                                ? "Result"
+                                                : "Possible results"}
+                                        </div>
                                         {results.map((singleResult, index) => (
                                             <div
                                                 key={index}
-                                                className="w-full rounded-md p-2 text-xl transition-all bg-purple-500 bg-opacity-25 border-purple-700 border-2 cursor-pointer hover:bg-purple-700 text-white"
+                                                className="w-full p-2 text-xl text-white transition-all bg-purple-500 bg-opacity-25 border-2 rounded-md cursor-pointer hover:border-purple-700 hover:bg-purple-700"
                                                 onClick={() => {
                                                     setLoadingPage(true);
                                                     openDetails(singleResult);
