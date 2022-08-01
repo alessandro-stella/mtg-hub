@@ -97,11 +97,11 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center text-white">
-                    <div className="font-bold text-center text-9xl font-beleren drop-shadow-2xl ">
+                    <div className="text-4xl font-bold text-center sm:text-6xl md:text-9xl font-beleren drop-shadow-2xl ">
                         MTG Hub
                     </div>
 
-                    <div className="text-2xl text-center">
+                    <div className="text-sm text-center md:text-2xl">
                         Browsing{" "}
                         <span className="font-bold tracking-wide text-white">
                             Magic: The Gathering
@@ -119,12 +119,12 @@ export default function Home() {
                     />
 
                     <div className="flex items-center justify-center w-full gap-4 text-white">
-                        <div className="text-2xl">Exact match</div>
+                        <div className="text-xl md:text-2xl">Exact match</div>
                         <div
                             onClick={() => setExact(!exact)}
-                            className={`text-xl bg-${
-                                exact ? "emerald" : "red"
-                            }-600 select-none cursor-pointer hover:brightness-125 font-bold px-2 py-1 rounded-md border-2 transition-all  grid place-items-center`}>
+                            className={`text-sm sm:text-xl ${
+                                exact ? "bg-white text-indigo-900" : "bg-transparent"
+                            } select-none cursor-pointer hover:brightness-150 font-bold px-2 py-1 rounded-md border-2 transition-all grid place-items-center`}>
                             {exact ? "ON" : "OFF"}
                         </div>
                     </div>
@@ -132,21 +132,19 @@ export default function Home() {
 
                 {results !== "" ? (
                     <div
-                        className={`  p-2 border-2 rounded-lg flex flex-col gap-2  max-h-[30em] overflow-auto w-3/4 max-w-sm relative ${
-                            hasScrollbar ? "pr-2" : ""
-                        }`}
+                        className="p-2 rounded-lg flex flex-col gap-2 max-h-[20em] overflow-auto w-3/4 max-w-sm relative border-2"
                         ref={resultsRef}>
                         {results === "loading" ? (
                             <Loader />
                         ) : (
                             <>
                                 {results === "not-found" ? (
-                                    <div className="px-8 py-2 w-full text-2xl font-bold text-center text-white bg-red-500 border-2 border-red-700 rounded-md ">
+                                    <div className="w-full px-8 py-2 text-sm font-bold text-center text-white bg-red-500 border-2 border-red-700 rounded-md md:text-2xl ">
                                         NO MATCHES
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="text-2xl font-bold text-white">
+                                        <div className="text-lg font-bold text-white md:text-2xl">
                                             {exact
                                                 ? "Result"
                                                 : "Possible results"}
@@ -154,7 +152,7 @@ export default function Home() {
                                         {results.map((singleResult, index) => (
                                             <div
                                                 key={index}
-                                                className="w-full p-2 text-xl text-white transition-all bg-purple-500 bg-opacity-25 border-2 rounded-md cursor-pointer hover:border-purple-700 hover:bg-purple-700"
+                                                className="w-full p-2 text-lg text-white transition-all bg-purple-500 bg-opacity-25 border-2 rounded-md cursor-pointer md:text-xl hover:border-purple-700 hover:bg-purple-700"
                                                 onClick={() => {
                                                     setLoadingPage(true);
                                                     openDetails(singleResult);
