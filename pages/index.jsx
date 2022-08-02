@@ -97,7 +97,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center text-white">
-                    <div className="text-4xl font-bold text-center sm:text-6xl md:text-9xl font-beleren drop-shadow-2xl ">
+                    <div className=" font-bold text-center text-6xl md:text-9xl font-beleren drop-shadow-2xl ">
                         MTG Hub
                     </div>
 

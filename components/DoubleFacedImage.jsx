@@ -5,13 +5,15 @@ import fallback from "../assets/error.png";
 
 export default function CustomImage({ cardName, images, large }) {
     console.log(images);
-    const [src, setSrc] = useState(loading);
+
+    const [srcFront, setSrcFront] = useState(loading);
+    const [srcBack, setSrcBack] = useState(loading);
     const [isRotated, setIsRotated] = useState(false);
 
     return (
-        <div className="bg-red-500 relative w-full h-full min-h-[30rem]">
+        <div className="relative w-full h-full min-h-[30rem]">
             <div
-                className={`absolute w-full h-full transform-preserve transition-all duration-200 ${
+                className={`absolute w-full h-full  transform-preserve transition-all duration-200 ${
                     isRotated ? "rotate-y-180" : ""
                 }`}>
                 <div className="absolute w-full h-full back-hidden ">
@@ -19,38 +21,42 @@ export default function CustomImage({ cardName, images, large }) {
                         priority={large || false}
                         layout="fill"
                         objectFit="contain"
-                        src={src}
+                        src={srcFront}
                         alt={cardName || "Error"}
                         onLoadingComplete={() =>
-                            setSrc(large ? images.back.png : images.back.small)
-                        }
-                        onError={() => setSrc(fallback)}
-                    />
-                </div>
-
-                <div className="absolute w-full h-full back-hidden bg-yellow-300 rotate-y-180">
-                    {/* <Image
-                        priority={large || false}
-                        layout="fill"
-                        objectFit="contain"
-                        src={src}
-                        alt={cardName || "Error"}
-                        onLoadingComplete={() =>
-                            setSrc(
+                            setSrcFront(
                                 large ? images.front.png : images.front.small
                             )
                         }
-                        onError={() => setSrc(fallback)}
-                    /> */}
+                        onError={() => setSrcFront(fallback)}
+                    />
+                </div>
+
+                <div className="absolute w-full h-full back-hidden rotate-y-180">
+                    <Image
+                        priority={large || false}
+                        layout="fill"
+                        objectFit="contain"
+                        src={srcBack}
+                        alt={cardName || "Error"}
+                        onLoadingComplete={() =>
+                            setSrcBack(
+                                large ? images.back.png : images.back.small
+                            )
+                        }
+                        onError={() => setSrcBack(fallback)}
+                    />
                 </div>
             </div>
 
-            <div
-                className="absolute w-full h-full opacity-0 hover:opacity-30 transform-all cursor-pointer bg-slate-900 text-white"
-                onClick={() => {
-                    setIsRotated(!isRotated);
-                }}>
-                Click to rotate
+            <div className="absolute w-full h-full text-white  transform-all">
+                <div
+                    className=" h-full aspect-[10/14] m-auto rounded-xl bg-slate-900 cursor-pointer opacity-0 hover:opacity-30 grid place-content-center text-2xl select-none"
+                    onClick={() => {
+                        setIsRotated(!isRotated);
+                    }}>
+                    Click to flip
+                </div>
             </div>
         </div>
     );
