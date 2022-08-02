@@ -8,7 +8,8 @@ import DoubleFacedImage from "../components/DoubleFacedImage";
 
 export default function SingleCard({ cardData }) {
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
-    console.log({ cardData });
+
+    console.log(cardData.images);
 
     function openReprint(setCode, collectorNumber) {
         if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
@@ -65,23 +66,15 @@ export default function SingleCard({ cardData }) {
                             key={index}
                             className="flex flex-col gap-2 p-2 transition bg-blue-500 border-2 border-blue-900 cursor-pointer h-fit hover:bg-blue-300">
                             <div className="relative w-full min-h-[15em]">
-                                {!isDoubleFaced ? (
-                                    <CustomImage
-                                        cardName={cardData.name}
-                                        imageData={singleReprint.image}
-                                    />
-                                ) : (
-                                    <>
-                                        <CustomImage
-                                            cardName={cardData.name}
-                                            imageData={cardData.images.front}
-                                        />
-                                        <CustomImage
-                                            cardName={cardData.name}
-                                            imageData={cardData.images.back}
-                                        />
-                                    </>
-                                )}
+                                <CustomImage
+                                    cardName={cardData.name}
+                                    imageData={
+                                        isDoubleFaced
+                                            ? singleReprint.image.front
+                                            : singleReprint.image
+                                    }
+                                    isDoubleFaced={isDoubleFaced}
+                                />
                             </div>
 
                             <div className="text-center">

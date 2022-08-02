@@ -3,7 +3,12 @@ import { useState } from "react";
 import loading from "../assets/loading.png";
 import fallback from "../assets/error.png";
 
-export default function CustomImage({ cardName, imageData, large }) {
+export default function CustomImage({
+    cardName,
+    imageData,
+    large,
+    isDoubleFaced,
+}) {
     const [src, setSrc] = useState(loading);
 
     return (
@@ -14,7 +19,13 @@ export default function CustomImage({ cardName, imageData, large }) {
             src={src}
             alt={cardName || "Error"}
             onLoadingComplete={() =>
-                setSrc(large ? imageData.png : imageData.small)
+                setSrc(
+                    large
+                        ? imageData.png
+                        : isDoubleFaced
+                        ? imageData
+                        : imageData.small
+                )
             }
             onError={() => setSrc(fallback)}
         />

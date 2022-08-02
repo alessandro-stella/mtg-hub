@@ -41,14 +41,12 @@ export default async function fetchCards(req, res) {
                 set: singleCard.set_name,
                 setCode: singleCard.set,
                 collectorNumber: singleCard.collector_number,
-                image: {
-                    small: singleCard.image_uris
-                        ? singleCard.image_uris.small
-                        : {
-                              front: singleCard.card_faces[0].image_uris.small,
-                              back: singleCard.card_faces[1].image_uris.small,
-                          },
-                },
+                image: singleCard.image_uris
+                    ? singleCard.image_uris.small
+                    : {
+                          front: singleCard.card_faces[0].image_uris.small,
+                          back: singleCard.card_faces[1].image_uris.small,
+                      },
             };
         }),
     };

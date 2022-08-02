@@ -123,7 +123,9 @@ export default function Home() {
                         <div
                             onClick={() => setExact(!exact)}
                             className={`text-sm sm:text-xl ${
-                                exact ? "bg-white text-indigo-900" : "bg-transparent"
+                                exact
+                                    ? "bg-white text-indigo-900"
+                                    : "bg-transparent"
                             } select-none cursor-pointer hover:brightness-150 font-bold px-2 py-1 rounded-md border-2 transition-all grid place-items-center`}>
                             {exact ? "ON" : "OFF"}
                         </div>
