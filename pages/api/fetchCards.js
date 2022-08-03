@@ -23,7 +23,6 @@ export default async function fetchCards(req, res) {
                   front: proxyCard.card_faces[0].image_uris,
                   back: proxyCard.card_faces[1].image_uris,
               },
-
         manaCost: proxyCard.mana_cost,
         cmc: proxyCard.cmc,
         identity: proxyCard.color_identity,

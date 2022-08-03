@@ -9,8 +9,6 @@ import DoubleFacedImage from "../components/DoubleFacedImage";
 export default function SingleCard({ cardData }) {
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
 
-    console.log(cardData.images);
-
     function openReprint(setCode, collectorNumber) {
         if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
             collectorNumber = collectorNumber.slice(0, -1) + "-star";
@@ -25,11 +23,11 @@ export default function SingleCard({ cardData }) {
                 <title>MTG Hub - {cardData.name}</title>
             </Head>
 
-            <div className="flex flex-col min-h-screen gap-1 p-4 h-fit bg-gradient-to-b from-indigo-900 to-purple-600">
+            <div className="flex flex-col min-h-screen gap-1 p-4 h-fit bg-gradient-to-b from-dark-violet to-purple-600">
                 <div className="text-4xl font-bold">{cardData.name}</div>
 
                 <div className="flex flex-col gap-4 p-2 bg-green-300 border-2 border-green-900 h-1/2">
-                    <div className="relative min-h-[30rem] h-full">
+                    <div className="relative min-h-[30rem] h-full flex">
                         {!isDoubleFaced ? (
                             <CustomImage
                                 cardName={cardData.name}

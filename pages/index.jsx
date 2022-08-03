@@ -88,7 +88,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="flex flex-col items-center justify-center w-screen min-h-screen gap-4 p-4 bg-gradient-to-b from-indigo-900 to-violet-700">
+            <div className="flex flex-col items-center justify-center w-screen min-h-screen gap-4 p-4 bg-gradient-to-b from-dark-violet to-violet-700">
                 <div
                     className={`${
                         loadingPage ? "fixed" : "hidden"
@@ -124,7 +124,7 @@ export default function Home() {
                             onClick={() => setExact(!exact)}
                             className={`text-sm sm:text-xl ${
                                 exact
-                                    ? "bg-white text-indigo-900"
+                                    ? "bg-white text-dark-violet"
                                     : "bg-transparent"
                             } select-none cursor-pointer hover:brightness-150 font-bold px-2 py-1 rounded-md border-2 transition-all grid place-items-center`}>
                             {exact ? "ON" : "OFF"}

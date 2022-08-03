@@ -2,7 +2,7 @@ import { server } from "../../config";
 
 export default function SingleCard({ cardData }) {
     return (
-        <h1 className="bg-gradient-to-b from-indigo-900 to-purple-600">
+        <h1 className="bg-gradient-to-b from-dark-violet to-purple-600">
             {cardData.name}
         </h1>
     );
