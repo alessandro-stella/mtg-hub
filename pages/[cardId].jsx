@@ -1,13 +1,10 @@
-import { server } from "../config";
-import CustomImage from "../components/CustomImage";
-import SymbolContainer from "../components/SymbolContainer";
-import ColorIdentity from "../components/ColorIdentity";
 import Head from "next/head";
 import Router from "next/router";
-import DoubleFacedImage from "../components/DoubleFacedImage";
+import CustomImage from "../components/CustomImage";
+import { server } from "../config";
 
 export default function SingleCard({ cardData }) {
-    const isDoubleFaced = cardData.images.hasOwnProperty("front");
+    const isDoubleFaced = cardData.prints[0].image.hasOwnProperty("front");
 
     function openReprint(setCode, collectorNumber) {
         if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
@@ -23,63 +20,32 @@ export default function SingleCard({ cardData }) {
                 <title>MTG Hub - {cardData.name}</title>
             </Head>
 
-            <div className="flex flex-col min-h-screen gap-1 p-4 h-fit bg-gradient-to-b from-dark-violet to-purple-600">
-                <div className="text-4xl font-bold">{cardData.name}</div>
+            <div className="flex flex-col min-h-screen gap-1 h-fit bg-gradient-to-b from-dark-violet to-purple-600">
+                <div className="m-auto reduced-width">
+                    <div className="text-4xl font-bold">{cardData.name}</div>
 
-                <div className="flex flex-col gap-4 p-2 bg-green-300 border-2 border-green-900 h-1/2">
-                    <div className="relative min-h-[30rem] h-full flex">
-                        {!isDoubleFaced ? (
-                            <CustomImage
-                                cardName={cardData.name}
-                                imageData={cardData.images}
-                                large={true}
-                            />
-                        ) : (
-                            <DoubleFacedImage
-                                cardName={cardData.name}
-                                images={cardData.images}
-                                large={true}
-                            />
-                        )}
+                    <div className="gap-2 p-2 bg-white card-grid">
+                        {cardData.prints.map((singlePrint, index) => (
+                            <div
+                                key={index}
+                                className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none ">
+                                <div
+                                    className="relative aspect-card"
+                                    onClick={() => {
+                                        openReprint(
+                                            singlePrint.setCode,
+                                            singlePrint.collectorNumber
+                                        );
+                                    }}>
+                                    <CustomImage
+                                        cardName={cardData.name}
+                                        imageData={singlePrint.image}
+                                        isDoubleFaced={isDoubleFaced}
+                                    />
+                                </div>
+                            </div>
+                        ))}
                     </div>
-
-                    {cardData.manaCost && (
-                        <SymbolContainer symbols={cardData.manaCost} />
-                    )}
-
-                    <ColorIdentity identity={cardData.identity} />
-                </div>
-
-                <div className="mt-4 text-2xl font-bold">All prints</div>
-
-                <div className="card-grid">
-                    {cardData.reprints.map((singleReprint, index) => (
-                        <div
-                            onClick={() => {
-                                openReprint(
-                                    singleReprint.setCode,
-                                    singleReprint.collectorNumber
-                                );
-                            }}
-                            key={index}
-                            className="flex flex-col gap-2 p-2 transition bg-blue-500 border-2 border-blue-900 cursor-pointer h-fit hover:bg-blue-300">
-                            <div className="relative w-full min-h-[15em]">
-                                <CustomImage
-                                    cardName={cardData.name}
-                                    imageData={
-                                        isDoubleFaced
-                                            ? singleReprint.image.front
-                                            : singleReprint.image
-                                    }
-                                    isDoubleFaced={isDoubleFaced}
-                                />
-                            </div>
-
-                            <div className="text-center">
-                                {singleReprint.set}
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </>
@@ -100,6 +66,16 @@ export async function getServerSideProps(context) {
             redirect: {
                 permanent: false,
                 destination: "/",
+            },
+            props: {},
+        };
+    }
+
+    if (cardData.data.prints.length === 1) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/card/${cardData.data.prints[0].setCode}-${cardData.data.prints[0].collectorNumber}`,
             },
             props: {},
         };
