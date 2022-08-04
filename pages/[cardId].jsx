@@ -1,18 +1,11 @@
 import Head from "next/head";
+import Link from "next/link";
 import Router from "next/router";
 import CustomImage from "../components/CustomImage";
 import { server } from "../config";
 
 export default function SingleCard({ cardData }) {
     const isDoubleFaced = cardData.prints[0].image.hasOwnProperty("front");
-
-    function openReprint(setCode, collectorNumber) {
-        if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
-            collectorNumber = collectorNumber.slice(0, -1) + "-star";
-        }
-
-        Router.push(`/card/${setCode}-${collectorNumber}`);
-    }
 
     return (
         <>
@@ -26,24 +19,18 @@ export default function SingleCard({ cardData }) {
 
                     <div className="gap-2 p-2 bg-white card-grid">
                         {cardData.prints.map((singlePrint, index) => (
-                            <div
+                            <Link
                                 key={index}
-                                className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none ">
-                                <div
-                                    className="relative aspect-card"
-                                    onClick={() => {
-                                        openReprint(
-                                            singlePrint.setCode,
-                                            singlePrint.collectorNumber
-                                        );
-                                    }}>
-                                    <CustomImage
-                                        cardName={cardData.name}
-                                        imageData={singlePrint.image}
-                                        isDoubleFaced={isDoubleFaced}
-                                    />
+                                href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
+                                <div className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none ">
+                                    <div className="relative aspect-card">
+                                        <CustomImage
+                                            cardName={cardData.name}
+                                            imageData={singlePrint.image}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>

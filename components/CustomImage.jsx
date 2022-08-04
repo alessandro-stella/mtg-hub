@@ -6,25 +6,14 @@ export default function CustomImage({
     cardName,
     imageData,
     large = false,
-    isDoubleFaced = false,
 }) {
-    const [isLoading, setIsLoading] = useState(true);
-
-    const getSrc = () => {
-        if (isDoubleFaced) {
-            if (large) {
-                return imageData.front.png;
-            }
-
-            return imageData.front;
-        }
-
-        return large ? imageData.png : imageData;
-    };
-
     return (
         <>
-            <Image src={getSrc()} alt={cardName} layout="fill" />
+            <Image
+                src={large ? imageData.png : imageData}
+                alt={cardName}
+                layout="fill"
+            />
         </>
     );
 }

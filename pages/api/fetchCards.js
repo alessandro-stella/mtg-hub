@@ -21,13 +21,12 @@ export default async function fetchCards(req, res) {
             return {
                 set: singleCard.set_name,
                 setCode: singleCard.set,
-                collectorNumber: singleCard.collector_number,
+                collectorNumber: parseCollectorNumber(
+                    singleCard.collector_number
+                ),
                 image: singleCard.image_uris
                     ? singleCard.image_uris.small
-                    : {
-                          front: singleCard.card_faces[0].image_uris.small,
-                          back: singleCard.card_faces[1].image_uris.small,
-                      },
+                    : singleCard.card_faces[0].image_uris.small,
             };
         }),
     };
@@ -49,4 +48,12 @@ function filterPrice(prices) {
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function parseCollectorNumber(collectorNumber) {
+    if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
+        collectorNumber = collectorNumber.slice(0, -1) + "-star";
+    }
+
+    return collectorNumber;
 }

@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import Loader from "../components/Loader";
+import Link from "next/link";
 
 export default function Home() {
     const resultsRef = useRef(null);
@@ -9,8 +10,6 @@ export default function Home() {
     const [results, setResults] = useState("");
     const [exact, setExact] = useState(false);
     const [loadingPage, setLoadingPage] = useState(false);
-
-    const [hasScrollbar, setHasScrollbar] = useState(false);
 
     const inputRef = useRef(null);
     let timeout;
@@ -54,28 +53,6 @@ export default function Home() {
 
         getData(inputRef.current.value);
     }, [exact]);
-
-    useEffect(() => {
-        if (results === "") return;
-
-        setHasScrollbar(
-            resultsRef.current.scrollHeight > resultsRef.current.clientHeight
-        );
-    }, [results]);
-
-    async function openDetails(cardName) {
-        let response = await fetch("/api/getCardId", {
-            headers: { cardName },
-        });
-
-        let { cardId } = await response.json();
-
-        if (cardId === "not-found") {
-            return;
-        }
-
-        Router.push(`/${cardId}`);
-    }
 
     return (
         <>
@@ -152,15 +129,17 @@ export default function Home() {
                                                 : "Possible results"}
                                         </div>
                                         {results.map((singleResult, index) => (
-                                            <div
-                                                key={index}
-                                                className="w-full p-2 text-lg text-white transition-all bg-purple-500 bg-opacity-25 border-2 rounded-md cursor-pointer md:text-xl hover:border-purple-700 hover:bg-purple-700"
-                                                onClick={() => {
-                                                    setLoadingPage(true);
-                                                    openDetails(singleResult);
-                                                }}>
-                                                {singleResult}
-                                            </div>
+                                            <Link
+                                                href={singleResult.cardId}
+                                                key={index}>
+                                                <div
+                                                    className="w-full p-2 text-lg text-white transition-all bg-purple-500 bg-opacity-25 border-2 rounded-md cursor-pointer md:text-xl hover:border-purple-700 hover:bg-purple-700"
+                                                    onClick={() =>
+                                                        setLoadingPage(true)
+                                                    }>
+                                                    {singleResult.cardName}
+                                                </div>
+                                            </Link>
                                         ))}
                                     </>
                                 )}

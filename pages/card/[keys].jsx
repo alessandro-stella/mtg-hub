@@ -1,9 +1,11 @@
 import { server } from "../../config";
 
 export default function SingleCard({ cardData }) {
+    console.log(cardData);
+
     return (
         <h1 className="bg-gradient-to-b from-dark-violet to-purple-600">
-            {cardData.name}
+            aaaaa
         </h1>
     );
 }
