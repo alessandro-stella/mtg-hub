@@ -30,6 +30,7 @@ export default async function fetchSingleCard(req, res) {
     Look for the element in "all_parts" array with "meld_result" property and get the id
     [{"component": "meld_part",},{"component": "meld_result"}] */
 
+    console.log("AAAAAAAAAA");
     return res.status(200).json({
         data:
             fetchResponse.status === 404
