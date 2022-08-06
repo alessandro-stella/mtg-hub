@@ -7,7 +7,6 @@ import { BsArrowRepeat } from "react-icons/bs";
 export default function CustomImage({ cardName, images }) {
     const [srcFront, setSrcFront] = useState(loading);
     const [srcBack, setSrcBack] = useState(loading);
-    const [isRotated, setIsRotated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     return (
@@ -48,25 +47,7 @@ export default function CustomImage({ cardName, images }) {
                         />
                     </div>
                 </div>
-
-                <div className="absolute w-full h-full transform-all">
-                    <div className="h-full aspect-[10/14] m-auto rounded-xl flex items-center justify-end text-2xl select-none">
-                        <div
-                            className={`${
-                                isRotated
-                                    ? "text-white border-white bg-dark-violet"
-                                    : "text-dark-violet border-dark-violet bg-white"
-                            } p-1 text-4xl border-2 rounded-full cursor-pointer  mr-4`}
-                            onClick={() => {
-                                setIsRotated(!isRotated);
-                            }}>
-                            <BsArrowRepeat />
-                        </div>
-                    </div>
-                </div>
             </div>
-
-            <div className={`${isLoading ? "" : "hidden"}`}>aaaaaaaaa</div>
         </>
     );
 }

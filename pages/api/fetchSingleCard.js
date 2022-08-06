@@ -17,14 +17,18 @@ export default async function fetchSingleCard(req, res) {
             ? "rotate90a"
             : "rotate90c",
         flip: "rotate180",
-        transform: "rotate180",
-        modal_dfc: "rotate180",
-        meld: fetchResponse.keywords.includes("Meld") && "rotate180",
-        double_faced_token: "rotate180",
-        art_series: "rotate180",
+        transform: "flip",
+        modal_dfc: "flip",
+        meld: fetchResponse.keywords.includes("Meld") && "flip",
+        double_faced_token: "flip",
+        art_series: "flip",
     };
 
     const rotate = specialCardTypes[fetchResponse.layout];
+
+    /* Get meld card back if needed
+    Look for the element in "all_parts" array with "meld_result" property and get the id
+    [{"component": "meld_part",},{"component": "meld_result"}] */
 
     return res.status(200).json({
         data:

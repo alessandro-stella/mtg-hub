@@ -36,20 +36,6 @@ export default async function fetchCards(req, res) {
     });
 }
 
-function filterPrice(prices) {
-    let priceArray = {};
-
-    Object.keys(prices).map((key) =>
-        prices[key] ? (priceArray[key] = prices[key]) : null
-    );
-
-    return priceArray;
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 function parseCollectorNumber(collectorNumber) {
     if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
         collectorNumber = collectorNumber.slice(0, -1) + "-star";

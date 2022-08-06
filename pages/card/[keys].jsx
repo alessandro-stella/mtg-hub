@@ -1,12 +1,25 @@
+import Head from "next/head";
+import { useState } from "react";
+import TransformButton from "../../components/TransformButton";
 import { server } from "../../config";
 
-export default function SingleCard({ cardData }) {
-    console.log(cardData);
+export default function SingleCard({ cardData, rotate = false }) {
+    /* const [isRotated, setIsRotated] = useState(rotate); */
+
+    console.log(cardData, rotate);
 
     return (
-        <h1 className="bg-gradient-to-b from-dark-violet to-purple-600">
-            aaaaa
-        </h1>
+        <>
+            <Head>
+                <title>MTG Hub - {cardData.name}</title>
+            </Head>
+
+            <h1 className="bg-gradient-to-b from-dark-violet to-purple-600">
+                {cardData.name}
+            </h1>
+
+            {rotate && <TransformButton buttonLabel={rotate} />}
+        </>
     );
 }
 
@@ -29,9 +42,12 @@ export async function getServerSideProps(context) {
         };
     }
 
+    console.log(cardData.data);
+
     return {
         props: {
-            cardData: cardData.data,
+            cardData: cardData.data.cardData,
+            rotate: cardData.data?.rotate ?? false,
         },
     };
 }
