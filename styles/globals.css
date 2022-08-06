@@ -15,8 +15,9 @@ Extra TailwindCSS classes
 }
 
 .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .aspect-card {

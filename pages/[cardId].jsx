@@ -22,13 +22,15 @@ export default function SingleCard({ cardData }) {
                             <Link
                                 key={index}
                                 href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
-                                <div className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none ">
-                                    <div className="relative aspect-card">
+                                <div className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none flex-1 min-w-[12em] max-w-[18em]">
+                                    <div className="relative aspect-card flex-1">
                                         <CustomImage
                                             cardName={cardData.name}
                                             imageData={singlePrint.image}
                                         />
                                     </div>
+
+                                    <div>{singlePrint.set}</div>
                                 </div>
                             </Link>
                         ))}

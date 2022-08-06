@@ -17,6 +17,7 @@ export default async function fetchCards(req, res) {
 
     let cardData = {
         name: proxyCard.name,
+        set: proxyCard.set,
         prints: fetchResponse.data.map((singleCard) => {
             return {
                 set: singleCard.set_name,
