@@ -8,7 +8,7 @@ export default async function fetchCards(req, res) {
     fetchResponse = await fetchResponse.json();
 
     if (!fetchResponse) {
-        return res.status(200).json({
+        return res.status(fetchResponse.status ?? 200).json({
             data: "not-found",
         });
     }
@@ -17,7 +17,6 @@ export default async function fetchCards(req, res) {
 
     let cardData = {
         name: proxyCard.name,
-        set: proxyCard.set,
         prints: fetchResponse.data.map((singleCard) => {
             return {
                 set: singleCard.set_name,
@@ -32,7 +31,7 @@ export default async function fetchCards(req, res) {
         }),
     };
 
-    return res.status(200).json({
+    return res.status(fetchResponse.status ?? 200).json({
         data: fetchResponse.status === 404 ? "not-found" : cardData,
     });
 }

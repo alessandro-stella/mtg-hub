@@ -27,15 +27,42 @@ export default async function fetchSingleCard(req, res) {
     const rotate = specialCardTypes[fetchResponse.layout];
 
     let cardData = {
-        name: fetchResponse.name,
-        manaCost: fetchResponse.mana_cost,
-        cmc: fetchResponse.cmc,
-        colorIdentity: fetchResponse.color_identity,
+        ...(fetchResponse.name.indexOf("//") === -1
+            ? {
+                  name: fetchResponse.name,
+                  manaCost: fetchResponse.mana_cost,
+                  effect: fetchResponse.oracle_text,
+                  typeLine: fetchResponse.type_line,
+                  ...(fetchResponse.flavor_text && {
+                      flavorText: fetchResponse.flavor_text,
+                  }),
+              }
+            : {
+                  name: fetchResponse.name,
+                  parts: fetchResponse.card_faces.map((singleFace) => {
+                      return {
+                          name: singleFace.name,
+                          ...(singleFace.mana_cost && {
+                              manaCost: singleFace.mana_cost,
+                          }),
+                          effect: singleFace.oracle_text,
+                          typeLine: singleFace.type_line,
+                          ...(singleFace.power && {
+                              power: singleFace.power,
+                          }),
+                          ...(singleFace.toughness && {
+                              toughness: singleFace.toughness,
+                          }),
+                          ...(singleFace.flavor_text && {
+                              flavorText: singleFace.flavor_text,
+                          }),
+                      };
+                  }),
+              }),
         rarity: fetchResponse.rarity,
-        power: fetchResponse.power,
-        toughness: fetchResponse.toughness,
-        typeLine: fetchResponse.typeLine,
-        effect: fetchResponse.oracle_text,
+        ...(fetchResponse.power && { power: fetchResponse.power }),
+        ...(fetchResponse.toughness && { toughness: fetchResponse.toughness }),
+
         prices: formatPrices(fetchResponse.prices),
         legalities: formatLegalities(fetchResponse.legalities),
         purchase: formatPurchase(fetchResponse.purchase_uris),
@@ -43,21 +70,39 @@ export default async function fetchSingleCard(req, res) {
 
     cardData.images = await formatImages(fetchResponse, rotate);
 
-    /* Needed data:
-    images
-    Link to reprints
-    */
+    cardData.prints = [];
 
-    return res.status(200).json({
+    let printsFetchResponse = await fetch(
+        `https://api.scryfall.com/cards/search?order=released&q=oracleid%3A${fetchResponse.oracle_id}&unique=prints`
+    );
+
+    printsFetchResponse = await printsFetchResponse.json();
+
+    cardData.prints = printsFetchResponse.data.map((singlePrint) => {
+        return {
+            set: singlePrint.set_name,
+            setCode: singlePrint.set,
+            collectorNumber: parseCollectorNumber(singlePrint.collector_number),
+        };
+    });
+
+    return res.status(fetchResponse.status ?? 200).json({
         data:
             fetchResponse.status === 404
                 ? "not-found"
                 : {
                       cardData,
-                      /* fetchResponse, */
                       ...(rotate !== false && { rotate }),
                   },
     });
+}
+
+function parseCollectorNumber(collectorNumber) {
+    if (collectorNumber.charAt(collectorNumber.length - 1) === "★") {
+        collectorNumber = collectorNumber.slice(0, -1) + "-star";
+    }
+
+    return collectorNumber;
 }
 
 async function getMeldBack(allParts) {
@@ -74,8 +119,6 @@ async function getMeldBack(allParts) {
 }
 
 async function formatImages(cardData, rotate) {
-    console.log(rotate);
-
     let images;
 
     if (rotate !== "flip") {
@@ -107,8 +150,12 @@ function formatPrices(pricesArray) {
 function formatLegalities(legalitiesArray) {
     let legalities = [];
 
-    for (const [key, value] of Object.entries(legalitiesArray))
-        if (value === "legal") legalities.push(key);
+    for (const [key, value] of Object.entries(legalitiesArray)) {
+        let obj = {};
+        obj[key] = value;
+
+        legalities.push(value);
+    }
 
     return legalities;
 }

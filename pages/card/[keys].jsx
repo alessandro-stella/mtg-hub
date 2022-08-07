@@ -3,9 +3,9 @@ import { useState } from "react";
 import TransformButton from "../../components/TransformButton";
 import { server } from "../../config";
 
-export default function SingleCard({ cardData, rotate = false, r }) {
+export default function SingleCard({ cardData, rotate = false }) {
     /* const [isRotated, setIsRotated] = useState(rotate); */
-    /* console.log(cardData, r); */
+    console.log(cardData);
 
     return (
         <>
@@ -45,7 +45,6 @@ export async function getServerSideProps(context) {
         props: {
             cardData: cardData.data.cardData,
             rotate: cardData.data?.rotate ?? false,
-            r: cardData.data.fetchResponse,
         },
     };
 }
