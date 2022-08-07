@@ -3,15 +3,14 @@ import { useState } from "react";
 import TransformButton from "../../components/TransformButton";
 import { server } from "../../config";
 
-export default function SingleCard({ cardData, rotate = false }) {
+export default function SingleCard({ cardData, rotate = false, r }) {
     /* const [isRotated, setIsRotated] = useState(rotate); */
-
-    console.log(cardData, rotate);
+    /* console.log(cardData, r); */
 
     return (
         <>
             <Head>
-                <title>MTG Hub - {cardData.name}</title>
+                <title>{`MTG Hub - ${cardData.name}`}</title>
             </Head>
 
             <h1 className="bg-gradient-to-b from-dark-violet to-purple-600">
@@ -42,12 +41,11 @@ export async function getServerSideProps(context) {
         };
     }
 
-    console.log(cardData.data);
-
     return {
         props: {
             cardData: cardData.data.cardData,
             rotate: cardData.data?.rotate ?? false,
+            r: cardData.data.fetchResponse,
         },
     };
 }
