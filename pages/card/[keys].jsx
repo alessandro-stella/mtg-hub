@@ -4,7 +4,7 @@ import TransformButton from "../../components/TransformButton";
 import { server } from "../../config";
 
 export default function SingleCard({ cardData, rotate = false }) {
-    /* const [isRotated, setIsRotated] = useState(rotate); */
+    const [isRotated, setIsRotated] = useState(rotate);
     console.log(cardData);
 
     return (

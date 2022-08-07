@@ -27,19 +27,26 @@ export default async function fetchSingleCard(req, res) {
     const rotate = specialCardTypes[fetchResponse.layout];
 
     let cardData = {
-        ...(fetchResponse.name.indexOf("//") === -1
-            ? {
-                  name: fetchResponse.name,
-                  manaCost: fetchResponse.mana_cost,
-                  effect: fetchResponse.oracle_text,
-                  typeLine: fetchResponse.type_line,
-                  ...(fetchResponse.flavor_text && {
-                      flavorText: fetchResponse.flavor_text,
-                  }),
-              }
-            : {
-                  name: fetchResponse.name,
-                  parts: fetchResponse.card_faces.map((singleFace) => {
+        name: fetchResponse.name,
+        cardInfo:
+            fetchResponse.name.indexOf("//") === -1
+                ? [
+                      {
+                          manaCost: fetchResponse.mana_cost,
+                          effect: fetchResponse.oracle_text,
+                          typeLine: fetchResponse.type_line,
+                          ...(fetchResponse.flavor_text && {
+                              flavorText: fetchResponse.flavor_text,
+                          }),
+                          ...(fetchResponse.power && {
+                              power: fetchResponse.power,
+                          }),
+                          ...(fetchResponse.toughness && {
+                              toughness: fetchResponse.toughness,
+                          }),
+                      },
+                  ]
+                : fetchResponse.card_faces.map((singleFace) => {
                       return {
                           name: singleFace.name,
                           ...(singleFace.mana_cost && {
@@ -58,11 +65,7 @@ export default async function fetchSingleCard(req, res) {
                           }),
                       };
                   }),
-              }),
         rarity: fetchResponse.rarity,
-        ...(fetchResponse.power && { power: fetchResponse.power }),
-        ...(fetchResponse.toughness && { toughness: fetchResponse.toughness }),
-
         prices: formatPrices(fetchResponse.prices),
         legalities: formatLegalities(fetchResponse.legalities),
         purchase: formatPurchase(fetchResponse.purchase_uris),
@@ -148,14 +151,25 @@ function formatPrices(pricesArray) {
 }
 
 function formatLegalities(legalitiesArray) {
+    const possibleFormats = {
+        standard: "Standard",
+        historic: "Historic",
+        pioneer: "Pioneer",
+        explorer: "Explorer",
+        modern: "Modern",
+        legacy: "Legacy",
+        pauper: "Pauper",
+        vintage: "Vintage",
+        penny: "Penny",
+        commander: "Commander",
+        brawl: "Brawl",
+        alchemy: "Alchemy",
+    };
     let legalities = [];
 
-    for (const [key, value] of Object.entries(legalitiesArray)) {
-        let obj = {};
-        obj[key] = value;
-
-        legalities.push(value);
-    }
+    for (const [key, value] of Object.entries(legalitiesArray))
+        if (possibleFormats[key])
+            legalities.push({ format: possibleFormats[key], legality: value });
 
     return legalities;
 }
