@@ -7,11 +7,6 @@
     src: url("../public/beleren.ttf");
 }
 
-@font-face {
-    font-family: "mplantin";
-    src: url("../public/mplantin.ttf");
-}
-
 /*==========
 Extra TailwindCSS classes
 ==========*/
@@ -36,12 +31,6 @@ Extra TailwindCSS classes
 
 .font-beleren {
     font-family: "beleren", system-ui, -apple-system, BlinkMacSystemFont,
-        Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-        Helvetica Neue, sans-serif;
-}
-
-.font-mplantin {
-    font-family: "mplantin", system-ui, -apple-system, BlinkMacSystemFont,
         Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
         Helvetica Neue, sans-serif;
 }

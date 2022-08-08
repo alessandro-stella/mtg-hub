@@ -28,65 +28,17 @@ export default async function fetchSingleCard(req, res) {
 
     let cardData = {
         name: fetchResponse.name,
-        cardInfo:
-            fetchResponse.name.indexOf("//") === -1
-                ? [
-                      {
-                          name: fetchResponse.name,
-                          manaCost: fetchResponse.mana_cost,
-                          effect: fetchResponse.oracle_text,
-                          typeLine: fetchResponse.type_line,
-                          ...(fetchResponse.flavor_text && {
-                              flavorText: fetchResponse.flavor_text,
-                          }),
-                          ...(fetchResponse.power && {
-                              power: fetchResponse.power,
-                          }),
-                          ...(fetchResponse.toughness && {
-                              toughness: fetchResponse.toughness,
-                          }),
-                      },
-                  ]
-                : fetchResponse.card_faces.map((singleFace) => {
-                      return {
-                          name: singleFace.name,
-                          ...(singleFace.mana_cost && {
-                              manaCost: singleFace.mana_cost,
-                          }),
-                          effect: singleFace.oracle_text,
-                          typeLine: singleFace.type_line,
-                          ...(singleFace.power && {
-                              power: singleFace.power,
-                          }),
-                          ...(singleFace.toughness && {
-                              toughness: singleFace.toughness,
-                          }),
-                          ...(singleFace.flavor_text && {
-                              flavorText: singleFace.flavor_text,
-                          }),
-                      };
-                  }),
+        cardInfo: formatCardInfo(
+            fetchResponse.name.indexOf("//") === -1,
+            fetchResponse
+        ),
         rarity: fetchResponse.rarity,
         prices: formatPrices(fetchResponse.prices),
         legalities: formatLegalities(fetchResponse.legalities),
         purchase: formatPurchase(fetchResponse.purchase_uris),
+        images: await formatImages(fetchResponse, rotate),
+        prints: getAllPrints(fetchResponse.oracle_id),
     };
-
-    cardData.images = await formatImages(fetchResponse, rotate);
-
-    let printsFetchResponse = await fetch(
-        `https://api.scryfall.com/cards/search?order=released&q=oracleid%3A${fetchResponse.oracle_id}&unique=prints`
-    );
-
-    printsFetchResponse = await printsFetchResponse.json();
-
-    cardData.prints = printsFetchResponse.data.map((singlePrint) => {
-        return {
-            set: singlePrint.set_name,
-            setCode: singlePrint.set,
-            collectorNumber: parseCollectorNumber(singlePrint.collector_number),
-        };
-    });
 
     return res.status(fetchResponse.status ?? 200).json({
         data:
@@ -96,6 +48,64 @@ export default async function fetchSingleCard(req, res) {
                       cardData,
                       ...(rotate !== false && { rotate }),
                   },
+    });
+}
+
+function formatCardInfo(hasMoreFaces, cardData) {
+    const returnInfo = hasMoreFaces
+        ? [
+              {
+                  name: cardData.name,
+                  typeLine: cardData.type_line,
+                  manaCost: cardData.mana_cost ?? undefined,
+                  effect: cardData.oracle_text ?? undefined,
+                  flavorText: cardData.flavor_text ?? undefined,
+                  power: cardData.power ?? undefined,
+                  toughness: cardData.toughness ?? undefined,
+              },
+          ]
+        : cardData.card_faces.map((singleFace) => {
+              return {
+                  name: singleFace.name,
+                  typeLine: singleFace.type_line,
+                  manaCost: singleFace.mana_cost ?? undefined,
+                  effect: singleFace.oracle_text ?? undefined,
+                  flavorText: singleFace.flavor_text ?? undefined,
+                  power: singleFace.power ?? undefined,
+                  toughness: singleFace.toughness ?? undefined,
+              };
+          });
+
+    const finalOutput = [];
+
+    returnInfo.forEach((section) => {
+        let obj = {};
+
+        for (const [key, value] of Object.entries(section)) {
+            if (value !== undefined && value !== "") {
+                obj[key] = value;
+            }
+        }
+
+        finalOutput.push(obj);
+    });
+
+    return finalOutput;
+}
+
+async function getAllPrints(oracleId) {
+    let printsFetchResponse = await fetch(
+        `https://api.scryfall.com/cards/search?order=released&q=oracleid%3A${oracleId}&unique=prints`
+    );
+
+    printsFetchResponse = await printsFetchResponse.json();
+
+    return printsFetchResponse.data.map((singlePrint) => {
+        return {
+            set: singlePrint.set_name,
+            setCode: singlePrint.set,
+            collectorNumber: parseCollectorNumber(singlePrint.collector_number),
+        };
     });
 }
 
