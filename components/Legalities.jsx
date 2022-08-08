@@ -19,7 +19,7 @@ export default function Legalities({ data }) {
                             <div
                                 className={`${getBgColor(
                                     singleLegality.legality
-                                )} min-w-[40%] grid place-content-center px-2 py-1 text-white`}>
+                                )} flex-1 max-w-[50%] rounded-md text-center px-2 py-1 text-white text-xs`}>
                                 {singleLegality.legality}
                             </div>
                             <div className="text-sm">

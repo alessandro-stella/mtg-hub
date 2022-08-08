@@ -90,7 +90,7 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center w-3/4 max-w-xl gap-4">
                     <input
                         ref={inputRef}
-                        className="w-full px-4 py-2"
+                        className="w-full px-4 py-2 text-lg"
                         type="text"
                         onChange={(e) => getResults(e.target.value)}
                     />

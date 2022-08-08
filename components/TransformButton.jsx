@@ -4,7 +4,7 @@ import {
     BsArrowRepeat,
 } from "react-icons/bs";
 
-export default function TransformButton({ buttonLabel }) {
+export default function TransformButton({ buttonLabel, rotate }) {
     const selectIcon = () => {
         if (buttonLabel === "flip" || buttonLabel === "rotate180")
             return <BsArrowRepeat />;
@@ -17,7 +17,9 @@ export default function TransformButton({ buttonLabel }) {
     };
 
     return (
-        <div className="border-2 border-dark-violet w-fit p-2 text-2xl">
+        <div
+            className="p-2 text-2xl border-2 border-dark-violet w-fit hover:cursor-pointer flex items-center justify-center gap-2"
+            onClick={() => rotate()}>
             {selectIcon()}
 
             <div>{buttonLabel === "flip" ? "Flip" : "Rotate"}</div>

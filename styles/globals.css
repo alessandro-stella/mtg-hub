@@ -52,7 +52,7 @@ Extra TailwindCSS classes
 
     outline: none;
     font-size: 1em;
-    line-height: 1em;
+    line-height: 1.15em;
 
     white-space: pre-line;
 }
