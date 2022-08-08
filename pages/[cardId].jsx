@@ -17,13 +17,13 @@ export default function SingleCard({ cardData }) {
                 <div className="m-auto reduced-width">
                     <div className="text-4xl font-bold">{cardData.name}</div>
 
-                    <div className="gap-2 p-2 bg-white card-grid">
+                    <div className="grid gap-2 p-2 bg-white grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         {cardData.prints.map((singlePrint, index) => (
                             <Link
                                 key={index}
                                 href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
-                                <div className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none flex-1 min-w-[12em] max-w-[18em]">
-                                    <div className="relative aspect-card flex-1">
+                                <div className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none ">
+                                    <div className="relative aspect-card">
                                         <CustomImage
                                             cardName={cardData.name}
                                             imageData={singlePrint.image}

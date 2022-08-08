@@ -5,7 +5,6 @@ export default function SymbolContainer({ symbols }) {
 
     return (
         <div className="relative flex flex-wrap items-center gap-1 h-fit">
-            <div className="mr-2 text-2xl">Mana cost:</div>
             {singleSymbols.map((symbol, index) => (
                 <Symbol symbol={symbol} key={index} />
             ))}

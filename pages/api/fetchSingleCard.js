@@ -32,6 +32,7 @@ export default async function fetchSingleCard(req, res) {
             fetchResponse.name.indexOf("//") === -1
                 ? [
                       {
+                          name: fetchResponse.name,
                           manaCost: fetchResponse.mana_cost,
                           effect: fetchResponse.oracle_text,
                           typeLine: fetchResponse.type_line,
@@ -72,8 +73,6 @@ export default async function fetchSingleCard(req, res) {
     };
 
     cardData.images = await formatImages(fetchResponse, rotate);
-
-    cardData.prints = [];
 
     let printsFetchResponse = await fetch(
         `https://api.scryfall.com/cards/search?order=released&q=oracleid%3A${fetchResponse.oracle_id}&unique=prints`
@@ -165,11 +164,21 @@ function formatLegalities(legalitiesArray) {
         brawl: "Brawl",
         alchemy: "Alchemy",
     };
-    let legalities = [];
+    const possibleLegality = {
+        legal: "Legal",
+        banned: "Banned",
+        restricted: "Restrict.",
+        not_legal: "Not Legal",
+    };
+
+    let legalities = [[], []];
 
     for (const [key, value] of Object.entries(legalitiesArray))
         if (possibleFormats[key])
-            legalities.push({ format: possibleFormats[key], legality: value });
+            legalities[legalities[0].length < 6 ? 0 : 1].push({
+                format: possibleFormats[key],
+                legality: possibleLegality[value],
+            });
 
     return legalities;
 }
