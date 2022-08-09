@@ -43,11 +43,6 @@ Extra TailwindCSS classes
     backface-visibility: hidden;
 }
 
-.center-absolute {
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 .bg-placeholder {
     background-image: linear-gradient(to right, #ccc 35%, #eee 50%, #ccc 65%);
     background-size: 600%;
@@ -57,6 +52,30 @@ Extra TailwindCSS classes
 .bg-error {
     background-image: url("../assets/loadingError.svg");
     background-size: contain;
+}
+
+.center-absolute {
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-rotate180 {
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-rotate90c {
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-rotate90a {
+    left: 50%;
+    transform: translateX(-50%) rotate(-90deg);
+    transition: all 0.2s ease-in-out;
 }
 
 @keyframes placeholder {

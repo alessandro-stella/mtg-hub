@@ -35,6 +35,8 @@ export default function SingleCard({ cardData, rotate = false }) {
                                     cardName={cardData.name}
                                     imageData={cardData.images}
                                     large={true}
+                                    rotate={rotate}
+                                    isRotated={isRotated}
                                 />
                             )}
                         </div>
