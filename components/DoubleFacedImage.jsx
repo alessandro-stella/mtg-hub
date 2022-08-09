@@ -1,8 +1,20 @@
 import Image from "next/dist/client/image";
+import { useEffect, useState } from "react";
+import Loader from "./Loader";
 
 export default function DoubleFacedImage({ cardName, images, isRotated }) {
     const srcFront = images.front.png;
     const srcBack = images.back.png;
+
+    const [isBackLoaded, setIsBackLoaded] = useState(false);
+    const [isFrontLoaded, setIsFrontLoaded] = useState(false);
+    const [imageHasLoaded, setImageHasLoaded] = useState(false);
+
+    useEffect(() => {
+        if (isBackLoaded && isFrontLoaded) {
+            setImageHasLoaded(true);
+        }
+    }, [isBackLoaded, isFrontLoaded]);
 
     return (
         <>
@@ -10,13 +22,14 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
                 className={`absolute w-full h-full transform-preserve transition-all duration-500 ${
                     isRotated ? "rotate-y-180" : ""
                 }`}>
-                <div className="absolute w-full h-full back-hidden ">
+                <div className="absolute w-full h-full back-hidden">
                     <Image
                         priority={true}
                         layout="fill"
                         objectFit="contain"
                         src={srcFront}
                         alt={cardName ?? "Error"}
+                        onLoadingComplete={() => setIsFrontLoaded(true)}
                     />
                 </div>
 
@@ -27,9 +40,16 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
                         objectFit="contain"
                         src={srcBack}
                         alt={cardName ?? "Error"}
+                        onLoadingComplete={() => setIsBackLoaded(true)}
                     />
                 </div>
             </div>
+
+            {!imageHasLoaded && (
+                <div className="absolute h-full aspect-card center-absolute bg-placeholder rounded-2xl grid place-content-center">
+                    <Loader />
+                </div>
+            )}
         </>
     );
 }

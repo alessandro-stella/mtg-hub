@@ -31,7 +31,11 @@ export default function SingleCard({ cardData, rotate = false }) {
                                     isRotated={isRotated}
                                 />
                             ) : (
-                                <CustomImage />
+                                <CustomImage
+                                    cardName={cardData.name}
+                                    imageData={cardData.images}
+                                    large={true}
+                                />
                             )}
                         </div>
 

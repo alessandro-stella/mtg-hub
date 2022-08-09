@@ -43,6 +43,27 @@ Extra TailwindCSS classes
     backface-visibility: hidden;
 }
 
+.center-absolute {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bg-placeholder {
+    background-image: linear-gradient(to right, #ccc 35%, #eee 50%, #ccc 65%);
+    background-size: 600%;
+    animation: placeholder 1s linear infinite;
+}
+
+@keyframes placeholder {
+    0% {
+        background-position: right;
+    }
+
+    100% {
+        background-position: left;
+    }
+}
+
 *,
 *:before,
 *::after {
