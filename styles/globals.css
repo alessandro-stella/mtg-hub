@@ -54,6 +54,11 @@ Extra TailwindCSS classes
     animation: placeholder 1s linear infinite;
 }
 
+.bg-error {
+    background-image: url("../assets/loadingError.svg");
+    background-size: contain;
+}
+
 @keyframes placeholder {
     0% {
         background-position: right;

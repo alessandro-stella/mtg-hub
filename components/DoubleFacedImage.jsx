@@ -1,6 +1,6 @@
 import Image from "next/dist/client/image";
 import { useEffect, useState } from "react";
-import Loader from "./Loader";
+import ImageFallbacks from "./ImageFallbacks";
 
 export default function DoubleFacedImage({ cardName, images, isRotated }) {
     const srcFront = images.front.png;
@@ -8,7 +8,9 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
 
     const [isBackLoaded, setIsBackLoaded] = useState(false);
     const [isFrontLoaded, setIsFrontLoaded] = useState(false);
+
     const [imageHasLoaded, setImageHasLoaded] = useState(false);
+    const [loadingError, setLoadingError] = useState(false);
 
     useEffect(() => {
         if (isBackLoaded && isFrontLoaded) {
@@ -30,6 +32,7 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
                         src={srcFront}
                         alt={cardName ?? "Error"}
                         onLoadingComplete={() => setIsFrontLoaded(true)}
+                        onError={() => setLoadingError(true)}
                     />
                 </div>
 
@@ -41,15 +44,12 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
                         src={srcBack}
                         alt={cardName ?? "Error"}
                         onLoadingComplete={() => setIsBackLoaded(true)}
+                        onError={() => setLoadingError(true)}
                     />
                 </div>
             </div>
 
-            {!imageHasLoaded && (
-                <div className="absolute h-full aspect-card center-absolute bg-placeholder rounded-2xl grid place-content-center">
-                    <Loader />
-                </div>
-            )}
+            {!imageHasLoaded && <ImageFallbacks loadingError={loadingError} />}
         </>
     );
 }

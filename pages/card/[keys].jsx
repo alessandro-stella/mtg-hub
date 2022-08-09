@@ -22,7 +22,7 @@ export default function SingleCard({ cardData, rotate = false }) {
 
             <div className="min-h-screen bg-neutral-200">
                 <div className="min-h-screen m-auto bg-white reduced-width">
-                    <div className="flex flex-col items-center bg-sky-300">
+                    <div className="flex flex-col items-center">
                         <div className="relative w-full min-h-[30em]">
                             {isDoubleFaced ? (
                                 <DoubleFacedImage
