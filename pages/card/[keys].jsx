@@ -45,6 +45,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                             <TransformButton
                                 buttonLabel={rotate}
                                 rotate={rotateImage}
+                                isRotated={isRotated}
                             />
                         )}
                     </div>

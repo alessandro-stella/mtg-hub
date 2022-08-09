@@ -71,11 +71,11 @@ Extra TailwindCSS classes
 }
 
 .custom-rotate90c {
-    transform: translateX(-50%) rotate(90deg);
+    transform: translateX(-50%) rotate(90deg) scale(0.7);
 }
 
 .custom-rotate90a {
-    transform: translateX(-50%) rotate(-90deg);
+    transform: translateX(-50%) rotate(-90deg) scale(0.7);
 }
 
 @keyframes placeholder {
