@@ -3,6 +3,7 @@ import { useState } from "react";
 import CardInfo from "../../components/CardInfo";
 import CustomImage from "../../components/CustomImage";
 import DoubleFacedImage from "../../components/DoubleFacedImage";
+import NavBar from "../../components/NavBar";
 import TransformButton from "../../components/TransformButton";
 import { server } from "../../config";
 
@@ -19,6 +20,8 @@ export default function SingleCard({ cardData, rotate = false }) {
             <Head>
                 <title>{`MTG Hub - ${cardData.name}`}</title>
             </Head>
+
+            <NavBar />
 
             <div className="min-h-screen bg-neutral-200">
                 <div className="min-h-screen m-auto bg-white reduced-width">

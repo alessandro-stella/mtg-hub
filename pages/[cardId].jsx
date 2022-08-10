@@ -1,28 +1,26 @@
 import Head from "next/head";
 import Link from "next/link";
-import Router from "next/router";
 import CustomImage from "../components/CustomImage";
+import NavBar from "../components/NavBar";
 import { server } from "../config";
 
 export default function SingleCard({ cardData }) {
-    const isDoubleFaced = cardData.prints[0].image.hasOwnProperty("front");
-
     return (
         <>
             <Head>
                 <title>MTG Hub - {cardData.name}</title>
             </Head>
 
-            <div className="flex flex-col min-h-screen gap-1 h-fit bg-gradient-to-b from-dark-violet to-purple-600">
-                <div className="m-auto reduced-width">
-                    <div className="text-4xl font-bold">{cardData.name}</div>
+            <NavBar />
 
-                    <div className="grid gap-2 p-2 bg-white grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="flex flex-col gap-1 h-fit ">
+                <div className="mx-auto  reduced-width">
+                    <div className="grid grid-cols-1 gap-2 p-2 bg-white sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         {cardData.prints.map((singlePrint, index) => (
                             <Link
                                 key={index}
                                 href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
-                                <div className="flex flex-col gap-2 bg-red-500 cursor-pointer select-none ">
+                                <div className="flex flex-col justify-between gap-1 transition-all cursor-pointer select-none hover:cursor-pointer hover:border-2 hover:border-dark-violet hover:p-2 hover:rounded-md hover:font-semibold">
                                     <div className="relative aspect-card">
                                         <CustomImage
                                             cardName={cardData.name}

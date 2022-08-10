@@ -54,6 +54,11 @@ Extra TailwindCSS classes
     background-size: contain;
 }
 
+.bg-logo {
+    background-image: url("../assets/logo.svg");
+    background-size: contain;
+}
+
 .center-absolute,
 .custom-rotate180,
 .custom-rotate90a,

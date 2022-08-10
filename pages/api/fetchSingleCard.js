@@ -174,12 +174,6 @@ function formatLegalities(legalitiesArray) {
         brawl: "Brawl",
         alchemy: "Alchemy",
     };
-    const possibleLegality = {
-        legal: "Legal",
-        banned: "Banned",
-        restricted: "Restrict.",
-        not_legal: "Not Legal",
-    };
 
     let legalities = [[], []];
 
@@ -187,7 +181,7 @@ function formatLegalities(legalitiesArray) {
         if (possibleFormats[key])
             legalities[legalities[0].length < 6 ? 0 : 1].push({
                 format: possibleFormats[key],
-                legality: possibleLegality[value],
+                legality: value,
             });
 
     return legalities;

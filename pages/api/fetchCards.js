@@ -25,8 +25,8 @@ export default async function fetchCards(req, res) {
                     singleCard.collector_number
                 ),
                 image: singleCard.image_uris
-                    ? singleCard.image_uris.small
-                    : singleCard.card_faces[0].image_uris.small,
+                    ? singleCard.image_uris.normal
+                    : singleCard.card_faces[0].image_uris.normal,
             };
         }),
     };
