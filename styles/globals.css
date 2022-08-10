@@ -83,6 +83,37 @@ Extra TailwindCSS classes
     transform: translateX(-50%) rotate(-90deg) scale(0.7);
 }
 
+.custom-border-rarity {
+    border: 1px;
+    border-top: 4px;
+    border-bottom: 4px;
+
+    border-style: solid;
+
+    border-left-color: #aaa;
+    border-right-color: #aaa;
+}
+
+.common {
+    border-top-color: #000;
+    border-bottom-color: #000;
+}
+
+.uncommon {
+    border-top-color: #a3c7d8;
+    border-bottom-color: #a3c7d8;
+}
+
+.rare {
+    border-top-color: #d7bc77;
+    border-bottom-color: #d7bc77;
+}
+
+.mythic {
+    border-top-color: hsl(9, 100%, 60%);
+    border-bottom-color: hsl(9, 100%, 60%);
+}
+
 @keyframes placeholder {
     0% {
         background-position: right;

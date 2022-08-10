@@ -1,24 +1,31 @@
 import Legalities from "./Legalities";
 import SymbolContainer from "./SymbolContainer";
 
-export default function CardInfo({ data, legalities }) {
+export default function CardInfo({ data, legalities, rarity }) {
     return (
-        <div className="w-2/3 m-auto flex flex-col gap-2">
+        <div
+            className={`custom-border-rarity ${rarity} rounded-lg w-2/3 m-auto flex flex-col gap-2 py-2 divide-y-[1px] divide-[#aaa]`}>
             {data.map((dataSection, index) => (
-                <div key={index} className="flex flex-col gap-4">
-                    <div className="flex gap-2 items-center">
+                <div
+                    key={index}
+                    className="flex flex-col gap-2 divide-y-[1px] divide-[#aaa]">
+                    <div className="flex gap-2 items-center px-2">
                         <div>{dataSection.name}</div>
                         {dataSection.manaCost && (
                             <SymbolContainer symbols={dataSection.manaCost} />
                         )}
                     </div>
-                    <div>{dataSection.typeLine}</div>
-                    {dataSection.effect && <div>{dataSection.effect}</div>}
+                    <div className="pt-2 px-2">{dataSection.typeLine}</div>
+                    {dataSection.effect && (
+                        <div className="pt-2 px-2">{dataSection.effect}</div>
+                    )}
                     {dataSection.flavorText && (
-                        <div className="italic">{dataSection.flavorText}</div>
+                        <div className="italic pt-2 px-2">
+                            {dataSection.flavorText}
+                        </div>
                     )}
                     {dataSection.power && (
-                        <div>
+                        <div className="pt-2 px-2">
                             {dataSection.power}/{dataSection.toughness}
                         </div>
                     )}

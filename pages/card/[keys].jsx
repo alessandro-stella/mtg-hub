@@ -23,8 +23,8 @@ export default function SingleCard({ cardData, rotate = false }) {
 
             <NavBar />
 
-            <div className="min-h-screen bg-neutral-200">
-                <div className="min-h-screen m-auto bg-white reduced-width">
+            <div className="min-h-screen">
+                <div className="flex flex-col min-h-screen gap-2 py-2 m-auto bg-white reduced-width">
                     <div className="flex flex-col items-center">
                         <div className="relative w-full min-h-[30em]">
                             {isDoubleFaced ? (
@@ -56,6 +56,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                     <CardInfo
                         data={cardData.cardInfo}
                         legalities={cardData.legalities}
+                        rarity={cardData.rarity}
                     />
                 </div>
             </div>

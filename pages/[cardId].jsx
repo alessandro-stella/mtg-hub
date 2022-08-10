@@ -14,7 +14,7 @@ export default function SingleCard({ cardData }) {
             <NavBar />
 
             <div className="flex flex-col gap-1 h-fit ">
-                <div className="mx-auto  reduced-width">
+                <div className="mx-auto reduced-width">
                     <div className="grid grid-cols-1 gap-2 p-2 bg-white sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         {cardData.prints.map((singlePrint, index) => (
                             <Link
