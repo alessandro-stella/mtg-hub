@@ -17,12 +17,13 @@ export default function Legalities({ data }) {
     }
 
     return (
-        <div className="flex gap-2 px-2">
+        <div className="flex gap-2 p-2 pb-0 divide-x-[1px] divide-[#aaa]">
             <div>
-                <div className="pb-1 text-xl font-semibold">Legalities</div>
-                <div className="flex flex-col gap-2 ">
+                <div className="text-xl font-semibold pb-2">Legalities</div>
+                <div className="flex flex-col gap-2">
                     {possibleLegalities.map((legality, index) => (
-                        <div key={index}
+                        <div
+                            key={index}
                             className={`${getBgColor(
                                 legality
                             )} text-white p-2 text-center rounded-md `}>
@@ -32,7 +33,7 @@ export default function Legalities({ data }) {
                 </div>
             </div>
 
-            <div className="grid flex-1 grid-cols-2 gap-2 pt-2">
+            <div className="grid flex-1 grid-cols-2 gap-2 pl-2">
                 {data.map((column, index) => (
                     <div
                         key={index}
