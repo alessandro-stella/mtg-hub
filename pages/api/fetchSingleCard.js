@@ -37,7 +37,7 @@ export default async function fetchSingleCard(req, res) {
         legalities: formatLegalities(fetchResponse.legalities),
         purchase: formatPurchase(fetchResponse.purchase_uris),
         images: await formatImages(fetchResponse, rotate),
-        prints: getAllPrints(fetchResponse.oracle_id),
+        prints: await getAllPrints(fetchResponse.oracle_id, fetchResponse.id),
     };
 
     return res.status(fetchResponse.status ?? 200).json({
@@ -93,20 +93,40 @@ function formatCardInfo(hasMoreFaces, cardData) {
     return finalOutput;
 }
 
-async function getAllPrints(oracleId) {
+async function getAllPrints(oracleId, currentPrintId) {
     let printsFetchResponse = await fetch(
         `https://api.scryfall.com/cards/search?order=released&q=oracleid%3A${oracleId}&unique=prints`
     );
 
     printsFetchResponse = await printsFetchResponse.json();
 
-    return printsFetchResponse.data.map((singlePrint) => {
-        return {
+    let returnData = [];
+    let currentPrint = 0;
+    let index = 0;
+
+    for (const singlePrint of printsFetchResponse.data) {
+        if (singlePrint.id === currentPrintId) {
+            currentPrint = index;
+        }
+
+        returnData.push({
             set: singlePrint.set_name,
             setCode: singlePrint.set,
             collectorNumber: parseCollectorNumber(singlePrint.collector_number),
-        };
-    });
+            setIcon: await getSetIcon(singlePrint.set),
+        });
+
+        index++;
+    }
+
+    return { printsData: returnData, currentPrint, oracleId };
+}
+
+async function getSetIcon(set) {
+    let fetchResponse = await fetch(`https://api.scryfall.com/sets/${set}`);
+    fetchResponse = await fetchResponse.json();
+
+    return fetchResponse.icon_svg_uri;
 }
 
 function parseCollectorNumber(collectorNumber) {

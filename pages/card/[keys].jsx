@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import AllPrints from "../../components/AllPrints";
 import CardInfo from "../../components/CardInfo";
 import CustomImage from "../../components/CustomImage";
 import DoubleFacedImage from "../../components/DoubleFacedImage";
@@ -24,7 +25,7 @@ export default function SingleCard({ cardData, rotate = false }) {
             <NavBar />
 
             <div className="min-h-screen">
-                <div className="flex flex-col min-h-screen gap-2 py-2 m-auto bg-white reduced-width">
+                <div className="flex flex-col min-h-screen gap-2 p-2 m-auto bg-white reduced-width">
                     <div className="flex flex-col items-center">
                         <div className="relative w-full min-h-[30em]">
                             {isDoubleFaced ? (
@@ -56,6 +57,17 @@ export default function SingleCard({ cardData, rotate = false }) {
                     <CardInfo
                         data={cardData.cardInfo}
                         legalities={cardData.legalities}
+                        rarity={cardData.rarity}
+                    />
+
+                    <AllPrints
+                        prints={cardData.prints.printsData}
+                        currentPrint={
+                            cardData.prints.printsData[
+                                cardData.prints.currentPrint
+                            ]
+                        }
+                        oracleId={cardData.prints.oracleId}
                         rarity={cardData.rarity}
                     />
                 </div>

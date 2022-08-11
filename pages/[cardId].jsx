@@ -8,7 +8,7 @@ export default function SingleCard({ cardData }) {
     return (
         <>
             <Head>
-                <title>MTG Hub - {cardData.name}</title>
+                <title>{`MTG Hub - ${cardData.name}`}</title>
             </Head>
 
             <NavBar />

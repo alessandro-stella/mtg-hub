@@ -18,8 +18,6 @@ export default async function fetchCards(req, res) {
     let cardData = {
         name: proxyCard.name,
         prints: fetchResponse.data.map((singleCard) => {
-            console.log(singleCard.image_uris);
-
             return {
                 set: singleCard.set_name,
                 setCode: singleCard.set,
