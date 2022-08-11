@@ -113,20 +113,12 @@ async function getAllPrints(oracleId, currentPrintId) {
             set: singlePrint.set_name,
             setCode: singlePrint.set,
             collectorNumber: parseCollectorNumber(singlePrint.collector_number),
-            setIcon: await getSetIcon(singlePrint.set),
         });
 
         index++;
     }
 
     return { printsData: returnData, currentPrint, oracleId };
-}
-
-async function getSetIcon(set) {
-    let fetchResponse = await fetch(`https://api.scryfall.com/sets/${set}`);
-    fetchResponse = await fetchResponse.json();
-
-    return fetchResponse.icon_svg_uri;
 }
 
 function parseCollectorNumber(collectorNumber) {
@@ -207,7 +199,7 @@ function formatLegalities(legalitiesArray) {
     return legalities;
 }
 
-function formatPurchase(purchaseArray) {
+function formatPurchase(purchaseArray = []) {
     let purchase = [];
 
     for (const [key, value] of Object.entries(purchaseArray))
