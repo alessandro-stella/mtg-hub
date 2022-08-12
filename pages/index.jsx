@@ -60,7 +60,7 @@ export default function Home() {
                 <title>MTG Hub</title>
                 <meta
                     name="description"
-                    content="A comprehensive website to get informations about your favourites MTG cards"
+                    content="A comprehensive website to get infos about your favorites MTG cards"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -74,7 +74,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center text-white">
-                    <div className=" font-bold text-center text-6xl md:text-9xl font-beleren drop-shadow-2xl ">
+                    <div className="text-6xl font-bold text-center  md:text-9xl font-beleren drop-shadow-2xl">
                         MTG Hub
                     </div>
 

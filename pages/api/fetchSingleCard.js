@@ -1,6 +1,6 @@
 export default async function fetchSingleCard(req, res) {
     let { setcode, collectornumber } = req.headers;
-    let star = !req.headers.star;
+    let star = req.headers.star === "true";
 
     if (star) {
         collectornumber += "★";

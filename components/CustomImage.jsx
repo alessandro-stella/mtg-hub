@@ -8,6 +8,7 @@ export default function CustomImage({
     large = false,
     rotate = false,
     isRotated = false,
+    hasLoaded = () => {},
 }) {
     const [imageHasLoaded, setImageHasLoaded] = useState(false);
     const [loadingError, setLoadingError] = useState(false);
@@ -24,8 +25,14 @@ export default function CustomImage({
                     src={large ? imageData.png : imageData}
                     alt={cardName}
                     layout="fill"
-                    onLoadingComplete={() => setImageHasLoaded(true)}
-                    onError={() => setLoadingError(true)}
+                    onLoadingComplete={() => {
+                        setImageHasLoaded(true);
+                        hasLoaded(false);
+                    }}
+                    onError={() => {
+                        setLoadingError(true);
+                        hasLoaded(false);
+                    }}
                 />
             </div>
 

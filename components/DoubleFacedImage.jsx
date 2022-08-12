@@ -2,7 +2,12 @@ import Image from "next/dist/client/image";
 import { useEffect, useState } from "react";
 import ImageFallbacks from "./ImageFallbacks";
 
-export default function DoubleFacedImage({ cardName, images, isRotated }) {
+export default function DoubleFacedImage({
+    cardName,
+    images,
+    isRotated,
+    hasLoaded = () => {},
+}) {
     const srcFront = images.front.png;
     const srcBack = images.back.png;
 
@@ -31,8 +36,14 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
                         objectFit="contain"
                         src={srcFront}
                         alt={cardName ?? "Error"}
-                        onLoadingComplete={() => setIsFrontLoaded(true)}
-                        onError={() => setLoadingError(true)}
+                        onLoadingComplete={() => {
+                            setIsFrontLoaded(true);
+                            hasLoaded(true);
+                        }}
+                        onError={() => {
+                            setLoadingError(true);
+                            hasLoaded(true);
+                        }}
                     />
                 </div>
 
@@ -43,8 +54,14 @@ export default function DoubleFacedImage({ cardName, images, isRotated }) {
                         objectFit="contain"
                         src={srcBack}
                         alt={cardName ?? "Error"}
-                        onLoadingComplete={() => setIsBackLoaded(true)}
-                        onError={() => setLoadingError(true)}
+                        onLoadingComplete={() => {
+                            setIsBackLoaded(true);
+                            hasLoaded(false);
+                        }}
+                        onError={() => {
+                            setLoadingError(true);
+                            hasLoaded(false);
+                        }}
                     />
                 </div>
             </div>

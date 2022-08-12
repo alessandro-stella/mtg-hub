@@ -1,16 +1,29 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AllPrints from "../../components/AllPrints";
 import CardInfo from "../../components/CardInfo";
 import CustomImage from "../../components/CustomImage";
 import DoubleFacedImage from "../../components/DoubleFacedImage";
+import Loader from "../../components/Loader";
 import NavBar from "../../components/NavBar";
 import TransformButton from "../../components/TransformButton";
 import { server } from "../../config";
 
 export default function SingleCard({ cardData, rotate = false }) {
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
+
     const [isRotated, setIsRotated] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading) return;
+
+        document.body.classList.add("disable-scroll");
+
+        return () => {
+            document.body.classList.remove("disable-scroll");
+        };
+    }, [isLoading]);
 
     const rotateImage = () => {
         setIsRotated(!isRotated);
@@ -22,10 +35,17 @@ export default function SingleCard({ cardData, rotate = false }) {
                 <title>{`MTG Hub - ${cardData.name}`}</title>
             </Head>
 
+            <div
+                className={`${
+                    isLoading ? "fixed" : "hidden"
+                } z-10 w-screen h-screen bg-black bg-opacity-50 grid place-content-center top-0`}>
+                <Loader />
+            </div>
+
             <NavBar />
 
             <div className="min-h-screen">
-                <div className="flex flex-col min-h-screen gap-2 p-2 m-auto bg-white reduced-width">
+                <div className="flex flex-col min-h-screen gap-2 p-2 m-auto reduced-width">
                     <div className="flex flex-col items-center">
                         <div className="relative w-full min-h-[30em]">
                             {isDoubleFaced ? (
@@ -33,6 +53,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                                     cardName={cardData.name}
                                     images={cardData.images}
                                     isRotated={isRotated}
+                                    hasLoaded={setIsLoading}
                                 />
                             ) : (
                                 <CustomImage
@@ -41,6 +62,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                                     large={true}
                                     rotate={rotate}
                                     isRotated={isRotated}
+                                    hasLoaded={setIsLoading}
                                 />
                             )}
                         </div>
@@ -69,6 +91,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                         }
                         oracleId={cardData.prints.oracleId}
                         rarity={cardData.rarity}
+                        startLoading={setIsLoading}
                     />
                 </div>
             </div>

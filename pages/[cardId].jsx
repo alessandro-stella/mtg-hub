@@ -1,26 +1,51 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import CustomImage from "../components/CustomImage";
+import Loader from "../components/Loader";
 import NavBar from "../components/NavBar";
 import { server } from "../config";
 
 export default function SingleCard({ cardData }) {
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading) return;
+
+        document.body.classList.add("disable-scroll");
+
+        return () => {
+            document.body.classList.remove("disable-scroll");
+        };
+    }, [isLoading]);
+
     return (
         <>
             <Head>
                 <title>{`MTG Hub - ${cardData.name}`}</title>
             </Head>
 
+            <div
+                className={`${
+                    isLoading ? "fixed" : "hidden"
+                } z-10 w-screen h-screen bg-black bg-opacity-50 grid place-content-center top-0`}>
+                <Loader />
+            </div>
+
             <NavBar />
 
-            <div className="flex flex-col gap-1 h-fit ">
+            <div className="flex flex-col gap-1 h-fit">
                 <div className="mx-auto reduced-width">
-                    <div className="grid grid-cols-1 gap-2 p-2 bg-white sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                    <div className="grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         {cardData.prints.map((singlePrint, index) => (
                             <Link
                                 key={index}
                                 href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
-                                <div className="flex flex-col justify-between gap-1 transition-all cursor-pointer select-none hover:cursor-pointer hover:border-2 hover:border-dark-violet hover:p-2 hover:rounded-md hover:font-semibold">
+                                <div
+                                    className="flex flex-col justify-between gap-1 p-2 transition-all bg-white rounded-md shadow-lg cursor-pointer select-none hover:cursor-pointer hover:border-2 hover:border-dark-violet hover:font-semibold"
+                                    onClick={() => {
+                                        setIsLoading(true);
+                                    }}>
                                     <div className="relative aspect-card">
                                         <CustomImage
                                             cardName={cardData.name}
