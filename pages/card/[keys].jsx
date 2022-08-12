@@ -44,43 +44,44 @@ export default function SingleCard({ cardData, rotate = false }) {
 
             <NavBar />
 
-            <div className="min-h-screen">
-                <div className="flex flex-col min-h-screen gap-2 p-2 m-auto reduced-width">
-                    <div className="flex flex-col items-center">
-                        <div className="relative w-full min-h-[30em]">
-                            {isDoubleFaced ? (
-                                <DoubleFacedImage
-                                    cardName={cardData.name}
-                                    images={cardData.images}
+            <div>
+                <div className="flex flex-col gap-2 p-2 m-auto reduced-width lg:flex-row lg:items-center lg:bg-red-500 lg:justify-between">
+                    <div className="bg-green-600 flex flex-col gap-2 lg:flex-row lg:flex-[2]">
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-full min-h-[30em]">
+                                {isDoubleFaced ? (
+                                    <DoubleFacedImage
+                                        cardName={cardData.name}
+                                        images={cardData.images}
+                                        isRotated={isRotated}
+                                        hasLoaded={setIsLoading}
+                                    />
+                                ) : (
+                                    <CustomImage
+                                        cardName={cardData.name}
+                                        imageData={cardData.images}
+                                        large={true}
+                                        rotate={rotate}
+                                        isRotated={isRotated}
+                                        hasLoaded={setIsLoading}
+                                    />
+                                )}
+                            </div>
+
+                            {rotate && (
+                                <TransformButton
+                                    buttonLabel={rotate}
+                                    rotate={rotateImage}
                                     isRotated={isRotated}
-                                    hasLoaded={setIsLoading}
-                                />
-                            ) : (
-                                <CustomImage
-                                    cardName={cardData.name}
-                                    imageData={cardData.images}
-                                    large={true}
-                                    rotate={rotate}
-                                    isRotated={isRotated}
-                                    hasLoaded={setIsLoading}
                                 />
                             )}
                         </div>
-
-                        {rotate && (
-                            <TransformButton
-                                buttonLabel={rotate}
-                                rotate={rotateImage}
-                                isRotated={isRotated}
-                            />
-                        )}
+                        <CardInfo
+                            data={cardData.cardInfo}
+                            legalities={cardData.legalities}
+                            rarity={cardData.rarity}
+                        />
                     </div>
-
-                    <CardInfo
-                        data={cardData.cardInfo}
-                        legalities={cardData.legalities}
-                        rarity={cardData.rarity}
-                    />
 
                     <AllPrints
                         prints={cardData.prints.printsData}

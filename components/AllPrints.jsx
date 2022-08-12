@@ -17,7 +17,7 @@ export default function AllPrints({
     }
 
     return (
-        <div className="flex flex-col m-auto w-full min-w-[24em] max-w-[32em] shadow-lg">
+        <div className="flex flex-col m-auto w-full min-w-[24em] max-w-[32em] shadow-lg lg:flex-1">
             <div className="flex items-center gap-2 p-1 text-white border-b-2 border-white bg-gradient-to-r from-dark-violet to-violet-700">
                 <div className="h-12 aspect-square">
                     <SetIcon setCode={currentPrint.setCode} invert={true} />
