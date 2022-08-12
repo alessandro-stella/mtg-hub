@@ -113,6 +113,9 @@ async function getAllPrints(oracleId, currentPrintId) {
             set: singlePrint.set_name,
             setCode: singlePrint.set,
             collectorNumber: parseCollectorNumber(singlePrint.collector_number),
+            image: singlePrint.image_uris
+                ? singlePrint.image_uris.small
+                : singlePrint.card_faces[0].image_uris.small,
         });
 
         index++;

@@ -1,8 +1,8 @@
-export default function SetIcon({ setCode }) {
-    const special = ["hbg", "sld"];
+import setIcons from "../assets/setIcons.json";
 
+export default function SetIcon({ setCode }) {
     const iconLink = `https://c2.scryfall.com/file/scryfall-symbols/sets/${
-        !special.includes(setCode) ? setCode : "star"
+        setIcons[setCode] ?? setCode
     }.svg?1659931200`;
 
     return (

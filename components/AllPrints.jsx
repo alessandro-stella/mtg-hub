@@ -3,7 +3,7 @@ import SetIcon from "./SetIcon";
 
 export default function AllPrints({ prints, currentPrint, oracleId, rarity }) {
     return (
-        <div className="flex flex-col gap-2 bg-sky-400">
+        <div className="flex flex-col gap-2 bg-sky-400 m-auto w-full min-w-[24em] max-w-[32em]">
             <div className="flex gap-2">
                 <SetIcon setCode={currentPrint.setCode} />
 
@@ -23,6 +23,13 @@ export default function AllPrints({ prints, currentPrint, oracleId, rarity }) {
                             </Link>
                         );
                 })}
+            </div>
+            <div>
+                <Link href={`/${oracleId}`}>
+                    <div className="hover:bg-sky-600 hover:cursor-pointer">
+                        View all prints
+                    </div>
+                </Link>
             </div>
         </div>
     );

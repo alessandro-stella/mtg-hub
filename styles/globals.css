@@ -120,6 +120,14 @@ Extra TailwindCSS classes
     background-repeat: no-repeat;
 }
 
+.all-inline-block .symbol {
+    display: inline-block;
+}
+
+.all-inline-block .text {
+    display: inline;
+}
+
 @keyframes placeholder {
     0% {
         background-position: right;
