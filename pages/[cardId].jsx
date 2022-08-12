@@ -8,6 +8,7 @@ import { server } from "../config";
 
 export default function SingleCard({ cardData }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [itemsShown, setItemsShown] = useState(10);
 
     useEffect(() => {
         if (!isLoading) return;
@@ -35,29 +36,51 @@ export default function SingleCard({ cardData }) {
             <NavBar />
 
             <div className="flex flex-col gap-1 h-fit">
-                <div className="mx-auto reduced-width">
+                <div className="mx-auto mb-2 reduced-width">
                     <div className="grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                        {cardData.prints.map((singlePrint, index) => (
-                            <Link
-                                key={index}
-                                href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
-                                <div
-                                    className="flex flex-col justify-between gap-1 p-2 transition-all bg-white rounded-md shadow-lg cursor-pointer select-none hover:cursor-pointer hover:border-2 hover:border-dark-violet hover:font-semibold"
-                                    onClick={() => {
-                                        setIsLoading(true);
-                                    }}>
-                                    <div className="relative aspect-card">
-                                        <CustomImage
-                                            cardName={cardData.name}
-                                            imageData={singlePrint.image}
-                                        />
-                                    </div>
+                        {cardData.prints.map((singlePrint, index) => {
+                            if (index < itemsShown)
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
+                                        <div
+                                            className="flex flex-col justify-between gap-1 p-2 transition-all bg-white rounded-md shadow-lg cursor-pointer select-none hover:cursor-pointer hover:border-2 hover:border-dark-violet hover:font-semibold"
+                                            onClick={() => {
+                                                setIsLoading(true);
+                                            }}>
+                                            <div className="relative aspect-card">
+                                                <CustomImage
+                                                    cardName={cardData.name}
+                                                    imageData={
+                                                        singlePrint.image
+                                                    }
+                                                />
+                                            </div>
 
-                                    <div>{singlePrint.set}</div>
-                                </div>
-                            </Link>
-                        ))}
+                                            <div>{singlePrint.set}</div>
+                                        </div>
+                                    </Link>
+                                );
+                        })}
                     </div>
+
+                    {cardData.prints.length - itemsShown > 0 && (
+                        <>
+                            <div
+                                className="px-4 py-1 m-auto text-center transition-all bg-white border-2 rounded-md shadow-lg select-none border-dark-violet text-dark-violet hover:brightness-90 w-fit hover:cursor-pointer"
+                                onClick={() => {
+                                    setItemsShown(
+                                        (itemsShown) => itemsShown + 10
+                                    );
+                                }}>
+                                <div className="text-lg">SHOW MORE</div>
+                                <div>
+                                    {cardData.prints.length - itemsShown} left
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </>
