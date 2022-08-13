@@ -36,7 +36,7 @@ export default function TransformButton({
 
     return (
         <div
-            className="flex items-center justify-center gap-2 px-2 py-1 mt-2 text-2xl border-2 rounded-md shadow-lg select-none border-dark-violet text-dark-violet bg-white hover:brightness-90 transition-all w-fit hover:cursor-pointer"
+            className="flex items-center justify-center gap-2 px-2 py-1 mt-2 lg:mt-1 text-2xl border-2 rounded-md shadow-lg select-none border-dark-violet text-dark-violet bg-white hover:brightness-90 transition-all w-fit hover:cursor-pointer"
             onClick={() => rotate()}>
             {altIcon ? <>{isRotated ? altIcon : defaultIcon}</> : defaultIcon}
 

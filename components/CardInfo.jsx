@@ -5,7 +5,8 @@ import SymbolContainer from "./SymbolContainer";
 export default function CardInfo({ data, legalities, rarity }) {
     return (
         <div
-            className={`custom-border-rarity ${rarity} rounded-lg m-auto max-w-[32em] min-w-[24em] flex flex-col gap-2 py-2 divide-y-[1px] divide-[#aaa] bg-white shadow-lgj`}>
+            className={`custom-border-rarity ${rarity} rounded-lg m-auto max-w-[32em] min-w-[24em] flex flex-col gap-2 py-2 divide-y-[1px] divide-[#aaa] bg-white shadow-lg 
+            lg:min-w-[initial] lg:max-w-[initial] lg:m-0 lg:h-fit lg:my-auto lg:flex-1 lg:pl-1`}>
             {data.map((dataSection, index) => (
                 <div
                     key={index}

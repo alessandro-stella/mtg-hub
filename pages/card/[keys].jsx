@@ -16,6 +16,10 @@ export default function SingleCard({ cardData, rotate = false }) {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(false);
+    }, []);
+
+    useEffect(() => {
         if (!isLoading) return;
 
         document.body.classList.add("disable-scroll");
@@ -45,9 +49,9 @@ export default function SingleCard({ cardData, rotate = false }) {
             <NavBar />
 
             <div>
-                <div className="flex flex-col gap-2 p-2 m-auto reduced-width lg:flex-row lg:items-center lg:bg-red-500 lg:justify-between">
-                    <div className="bg-green-600 flex flex-col gap-2 lg:flex-row lg:flex-[2]">
-                        <div className="flex flex-col items-center">
+                <div className="flex flex-col gap-2 p-2 m-auto reduced-width lg:flex-row lg:items-start lg:justify-between">
+                    <div className="flex flex-col gap-2 lg:gap-0 lg:flex-row lg:flex-[2]">
+                        <div className="flex flex-col items-center lg:flex-1 lg:translate-x-2">
                             <div className="relative w-full min-h-[30em]">
                                 {isDoubleFaced ? (
                                     <DoubleFacedImage
