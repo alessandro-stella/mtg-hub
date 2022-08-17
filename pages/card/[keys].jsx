@@ -46,7 +46,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                 <Loader />
             </div>
 
-            <NavBar startLoading={setIsLoading}/>
+            <NavBar startLoading={setIsLoading} />
 
             <div>
                 <div className="flex flex-col gap-2 p-2 m-auto reduced-width lg:flex-row lg:items-start lg:justify-between">
@@ -88,6 +88,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                     </div>
 
                     <AllPrints
+                        cardName={cardData.name}
                         prints={cardData.prints.printsData}
                         currentPrint={
                             cardData.prints.printsData[

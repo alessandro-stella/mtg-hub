@@ -1,13 +1,18 @@
 import Link from "next/link";
+import { useState } from "react";
+import CustomImage from "./CustomImage";
 import SetIcon from "./SetIcon";
 
 export default function AllPrints({
+    cardName,
     prints,
     currentPrint,
     oracleId,
     rarity,
     startLoading,
 }) {
+    const [shownImage, setShownImage] = useState(false);
+
     function formatStar(collectorNumber) {
         const regex = /[0-9]/g;
 
@@ -50,7 +55,7 @@ export default function AllPrints({
                                     key={index}
                                     href={`/card/${singlePrint.setCode}-${singlePrint.collectorNumber}`}>
                                     <div
-                                        className={`hover:bg-violet-200 transition-all flex items-center gap-2 hover:cursor-pointer p-2 ${
+                                        className={`relative hover:bg-violet-200 transition-all flex items-center gap-2 hover:cursor-pointer p-2 ${
                                             currentPrint.image ===
                                             singlePrint.image
                                                 ? "pointer-events-none bg-violet-300"
@@ -58,7 +63,11 @@ export default function AllPrints({
                                         }`}
                                         onClick={() => {
                                             startLoading(true);
-                                        }}>
+                                        }}
+                                        onMouseOver={() => setShownImage(index)}
+                                        onMouseLeave={() =>
+                                            setShownImage(false)
+                                        }>
                                         <div className="h-6">
                                             <SetIcon
                                                 setCode={singlePrint.setCode}
@@ -69,6 +78,17 @@ export default function AllPrints({
                                             formatStar(
                                                 singlePrint.collectorNumber
                                             )}
+                                        {shownImage !== false &&
+                                            shownImage === index && (
+                                                <div className="absolute right-0 z-[2] w-1/4 aspect-card shadow-lg pointer-events-none">
+                                                    <CustomImage
+                                                        cardName={cardName}
+                                                        imageData={
+                                                            singlePrint.image
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
                                     </div>
                                 </Link>
                             );
@@ -77,7 +97,7 @@ export default function AllPrints({
 
                 {prints.length !== 1 && (
                     <Link href={`/${oracleId}`}>
-                        <div className="p-2 text-base hover:text-white font-semibold transition-all border-t-2 border-b-2 border-violet-700 hover:bg-violet-400 hover:cursor-pointer">
+                        <div className="p-2 text-base font-semibold transition-all border-t-2 border-b-2 hover:text-white border-violet-700 hover:bg-violet-400 hover:cursor-pointer">
                             View all prints &rarr;
                         </div>
                     </Link>
