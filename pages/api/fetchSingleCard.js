@@ -35,7 +35,10 @@ export default async function fetchSingleCard(req, res) {
         rarity: fetchResponse.rarity,
         prices: formatPrices(fetchResponse.prices),
         legalities: formatLegalities(fetchResponse.legalities),
-        purchase: formatPurchase(fetchResponse.purchase_uris),
+        purchase: formatPurchase(
+            fetchResponse.name,
+            fetchResponse.purchase_uris
+        ),
         images: await formatImages(fetchResponse, rotate),
         prints: await getAllPrints(fetchResponse.oracle_id, fetchResponse.id),
     };
@@ -202,11 +205,20 @@ function formatLegalities(legalitiesArray) {
     return legalities;
 }
 
-function formatPurchase(purchaseArray = []) {
+function formatPurchase(cardName, purchaseArray = []) {
     let purchase = [];
 
-    for (const [key, value] of Object.entries(purchaseArray))
-        purchase.push({ site: key, link: value });
+    for (const [key, value] of Object.entries(purchaseArray)) {
+        let tempValue = value;
+
+        if (key === "cardmarket") {
+            tempValue = `https://www.cardmarket.com/en/Magic/Products/Search?&searchString=${encodeURIComponent(
+                `[${cardName}]`
+            )}&exactMatch=on`;
+        }
+
+        purchase.push({ site: key, link: tempValue });
+    }
 
     return purchase;
 }

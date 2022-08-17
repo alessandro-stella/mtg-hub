@@ -8,6 +8,8 @@ import Loader from "components/Loader";
 import NavBar from "components/NavBar";
 import TransformButton from "components/TransformButton";
 import { server } from "config";
+import BuyLinks from "components/BuyLinks";
+import Prices from "components/Prices";
 
 export default function SingleCard({ cardData, rotate = false }) {
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
@@ -100,6 +102,9 @@ export default function SingleCard({ cardData, rotate = false }) {
                         startLoading={setIsLoading}
                     />
                 </div>
+
+                <BuyLinks data={cardData.purchase} />
+                <Prices data={cardData.prices} />
             </div>
         </>
     );
