@@ -1,8 +1,7 @@
+import Loader from "components/Loader";
 import Head from "next/head";
-import { useEffect, useRef, useState } from "react";
-import Router from "next/router";
-import Loader from "../components/Loader";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
     const resultsRef = useRef(null);

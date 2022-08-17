@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import AllPrints from "../../components/AllPrints";
-import CardInfo from "../../components/CardInfo";
-import CustomImage from "../../components/CustomImage";
-import DoubleFacedImage from "../../components/DoubleFacedImage";
-import Loader from "../../components/Loader";
-import NavBar from "../../components/NavBar";
-import TransformButton from "../../components/TransformButton";
-import { server } from "../../config";
+import AllPrints from "components/AllPrints";
+import CardInfo from "components/CardInfo";
+import CustomImage from "components/CustomImage";
+import DoubleFacedImage from "components/DoubleFacedImage";
+import Loader from "components/Loader";
+import NavBar from "components/NavBar";
+import TransformButton from "components/TransformButton";
+import { server } from "config";
 
 export default function SingleCard({ cardData, rotate = false }) {
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
@@ -46,7 +46,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                 <Loader />
             </div>
 
-            <NavBar />
+            <NavBar startLoading={setIsLoading}/>
 
             <div>
                 <div className="flex flex-col gap-2 p-2 m-auto reduced-width lg:flex-row lg:items-start lg:justify-between">

@@ -17,7 +17,7 @@ export default function Legalities({ data }) {
     }
 
     return (
-        <div className="flex gap-2 p-2 pb-0 divide-x-[1px] divide-[#aaa]">
+        <div className="flex gap-2 p-2 pb-0 divide-x-[1px] divide-[#aaa] lg:pl-4">
             <div>
                 <div className="text-xl font-semibold pb-2">Legalities</div>
                 <div className="flex flex-col gap-2">

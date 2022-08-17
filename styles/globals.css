@@ -114,12 +114,6 @@ Extra TailwindCSS classes
     border-bottom-color: hsl(9, 100%, 60%);
 }
 
-.bg-icon {
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
 .all-inline-block .symbol {
     display: inline-block;
 }
@@ -130,6 +124,32 @@ Extra TailwindCSS classes
 
 .disable-scroll {
     overflow: hidden;
+}
+
+.bg-icon,
+.search-icon,
+.cross-icon {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.search-icon,
+.cross-icon {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+
+.search-icon {
+    background-image: url("../assets/lens.svg");
+    background-size: 70%;
+}
+
+.cross-icon {
+    background-image: url("../assets/cross.svg");
+    background-size: 50%;
+    border-radius: 100vmax;
 }
 
 @keyframes placeholder {

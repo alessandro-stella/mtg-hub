@@ -11,15 +11,12 @@ export default function AllPrints({
     function formatStar(collectorNumber) {
         const regex = /[0-9]/g;
 
-
         if (isNaN(collectorNumber)) {
             return collectorNumber.match(regex).join("") + "★";
         }
 
         return collectorNumber;
     }
-
-    console.log(prints)
 
     return (
         <div className="flex flex-col m-auto w-full min-w-[24em] lg:min-w-[initial] max-w-[32em] shadow-lg lg:flex-1 lg:m-0">
@@ -41,7 +38,7 @@ export default function AllPrints({
             </div>
 
             <div className="flex flex-col bg-white">
-                <div className="p-2 text-lg text-white bg-gradient-to-r from-dark-violet to-violet-700 ">
+                <div className="p-2 text-lg font-semibold text-white bg-gradient-to-r from-dark-violet to-violet-700 ">
                     Prints
                 </div>
 
@@ -76,12 +73,15 @@ export default function AllPrints({
                                 </Link>
                             );
                     })}
+                </div>
+
+                {prints.length !== 1 && (
                     <Link href={`/${oracleId}`}>
-                        <div className="p-2 text-base font-semibold transition-all border-b-2 hover:bg-violet-300 hover:cursor-pointer border-violet-700">
+                        <div className="p-2 text-base hover:text-white font-semibold transition-all border-t-2 border-b-2 border-violet-700 hover:bg-violet-400 hover:cursor-pointer">
                             View all prints &rarr;
                         </div>
                     </Link>
-                </div>
+                )}
             </div>
         </div>
     );

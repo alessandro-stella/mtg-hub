@@ -1,14 +1,18 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import CustomImage from "../components/CustomImage";
-import Loader from "../components/Loader";
-import NavBar from "../components/NavBar";
-import { server } from "../config";
+import CustomImage from "components/CustomImage";
+import Loader from "components/Loader";
+import NavBar from "components/NavBar";
+import { server } from "config";
 
 export default function SingleCard({ cardData }) {
     const [isLoading, setIsLoading] = useState(false);
     const [itemsShown, setItemsShown] = useState(10);
+
+    useEffect(() => {
+        setIsLoading(false);
+    }, []);
 
     useEffect(() => {
         if (!isLoading) return;
@@ -33,7 +37,7 @@ export default function SingleCard({ cardData }) {
                 <Loader />
             </div>
 
-            <NavBar />
+            <NavBar startLoading={setIsLoading} />
 
             <div className="flex flex-col gap-1 h-fit">
                 <div className="mx-auto mb-2 reduced-width">

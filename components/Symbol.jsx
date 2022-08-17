@@ -1,4 +1,4 @@
-import allSymbols from "../assets/symbols.json";
+import allSymbols from "assets/symbols.json";
 import Image from "next/image";
 
 export default function Symbol({ symbol }) {
