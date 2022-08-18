@@ -171,8 +171,44 @@ async function formatImages(cardData, rotate) {
 function formatPrices(pricesArray) {
     let prices = [];
 
-    for (const [key, value] of Object.entries(pricesArray))
-        if (value) prices.push({ version: key, price: value });
+    for (const [key, value] of Object.entries(pricesArray)) {
+        let formattedKey,
+            formattedValue = value ?? "N/A";
+
+        if (key.indexOf("_") !== -1) {
+            formattedKey = key.split("_");
+            formattedKey =
+                formattedKey[0].toUpperCase() +
+                " (" +
+                formattedKey[1].charAt(0).toUpperCase() +
+                formattedKey[1].slice(1) +
+                ")";
+        } else {
+            formattedKey = key.toUpperCase();
+        }
+
+        console.log({ formattedKey });
+
+        if (value) {
+            switch (true) {
+                case key.includes("eur"):
+                    formattedValue += " €";
+                    break;
+
+                case key.includes("usd"):
+                    formattedValue = "$ " + value;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        prices.push({
+            version: formattedKey,
+            price: formattedValue,
+        });
+    }
 
     return prices;
 }
