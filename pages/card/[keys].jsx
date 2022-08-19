@@ -1,27 +1,35 @@
-import Head from "next/head";
-import { useEffect, useState } from "react";
 import AllPrints from "components/AllPrints";
+import BuyLinks from "components/BuyLinks";
 import CardInfo from "components/CardInfo";
 import CustomImage from "components/CustomImage";
 import DoubleFacedImage from "components/DoubleFacedImage";
 import Loader from "components/Loader";
 import NavBar from "components/NavBar";
+import Prices from "components/Prices";
 import TransformButton from "components/TransformButton";
 import { server } from "config";
-import BuyLinks from "components/BuyLinks";
-import Prices from "components/Prices";
+import crypto from "crypto";
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
-export default function SingleCard({ cardData, rotate = false }) {
-    console.log(cardData);
+export default function SingleCard({
+    cardData,
+    rotate = false,
+    navigationKey,
+}) {
+    const [pastKey, setPastKey] = useState(navigationKey);
 
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
-
     const [isRotated, setIsRotated] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        setIsLoading(false);
-    }, []);
+        if (pastKey !== navigationKey) {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 500);
+        }
+    });
 
     useEffect(() => {
         if (!isLoading) return;
@@ -105,7 +113,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                     />
                 </div>
 
-                <div className="flex flex-col gap-4 lg:gap-2 items-center reduced-width m-auto pb-2 lg:flex-row lg:items-start mt-4">
+                <div className="flex flex-col items-center gap-4 pb-2 m-auto mt-4 lg:gap-2 reduced-width lg:flex-row lg:items-start">
                     <BuyLinks data={cardData.purchase} />
                     <Prices data={cardData.prices} />
                 </div>
@@ -137,6 +145,7 @@ export async function getServerSideProps(context) {
         props: {
             cardData: cardData.data.cardData,
             rotate: cardData.data?.rotate ?? false,
+            navigationKey: crypto.randomBytes(8).toString("hex"),
         },
     };
 }

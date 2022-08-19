@@ -1,7 +1,7 @@
 export default function BuyLinks({ data }) {
     return (
         <div className="flex-1 lg:px-8 pt-0 min-w-[32em] lg:min-w-[initial]">
-            <div className="text-xl font-semibold pb-2">Buy this card</div>
+            <div className="pb-2 text-xl font-semibold">Buy this card</div>
 
             <div className="flex flex-col gap-2">
                 {data.map((singleLink, index) => {

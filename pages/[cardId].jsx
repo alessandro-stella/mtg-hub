@@ -1,18 +1,17 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import CustomImage from "components/CustomImage";
 import Loader from "components/Loader";
 import NavBar from "components/NavBar";
 import { server } from "config";
+import crypto from "crypto";
+import Head from "next/head";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function SingleCard({ cardData }) {
+export default function SingleCard({ cardData, navigationKey }) {
+    const [pastKey, setPastKey] = useState(navigationKey);
+
     const [isLoading, setIsLoading] = useState(false);
     const [itemsShown, setItemsShown] = useState(10);
-
-    useEffect(() => {
-        setIsLoading(false);
-    }, []);
 
     useEffect(() => {
         if (!isLoading) return;
@@ -23,6 +22,14 @@ export default function SingleCard({ cardData }) {
             document.body.classList.remove("disable-scroll");
         };
     }, [isLoading]);
+
+    useEffect(() => {
+        if (pastKey !== navigationKey) {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 500);
+        }
+    });
 
     return (
         <>
@@ -121,6 +128,9 @@ export async function getServerSideProps(context) {
     }
 
     return {
-        props: { cardData: cardData.data },
+        props: {
+            cardData: cardData.data,
+            navigationKey: crypto.randomBytes(8).toString("hex"),
+        },
     };
 }
