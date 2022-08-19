@@ -12,6 +12,8 @@ import BuyLinks from "components/BuyLinks";
 import Prices from "components/Prices";
 
 export default function SingleCard({ cardData, rotate = false }) {
+    console.log(cardData);
+
     const isDoubleFaced = cardData.images.hasOwnProperty("front");
 
     const [isRotated, setIsRotated] = useState(false);
@@ -103,7 +105,7 @@ export default function SingleCard({ cardData, rotate = false }) {
                     />
                 </div>
 
-                <div className="flex reduced-width m-auto">
+                <div className="flex flex-col gap-4 lg:gap-2 items-center reduced-width m-auto pb-2 lg:flex-row lg:items-start mt-4">
                     <BuyLinks data={cardData.purchase} />
                     <Prices data={cardData.prices} />
                 </div>

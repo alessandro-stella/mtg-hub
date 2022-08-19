@@ -4,7 +4,6 @@ import Loader from "./Loader";
 
 export default function SearchBar({ startLoading }) {
     const inputRef = useRef(null);
-    const resultsRef = useRef(null);
     const searchBarRef = useRef(null);
     const buttonRef = useRef(null);
 
@@ -63,9 +62,14 @@ export default function SearchBar({ startLoading }) {
             return;
         }
 
+        resetInput();
+    }, [isOpen]);
+
+    function resetInput() {
         inputRef.current.value = "";
         setResults("");
-    }, [isOpen]);
+        setExact(false);
+    }
 
     useEffect(() => {
         if (results === "") return;
@@ -136,11 +140,12 @@ export default function SearchBar({ startLoading }) {
                                                         key={index}>
                                                         <div
                                                             className="w-full p-2 text-lg text-white transition-all bg-purple-500 bg-opacity-25 border-2 rounded-md cursor-pointer md:text-xl hover:border-purple-800 hover:bg-purple-800 hover:shadow-lg"
-                                                            onClick={() =>
+                                                            onClick={() => {
                                                                 startLoading(
                                                                     true
-                                                                )
-                                                            }>
+                                                                );
+                                                                resetInput();
+                                                            }}>
                                                             {
                                                                 singleResult.cardName
                                                             }
