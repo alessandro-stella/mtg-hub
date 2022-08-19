@@ -7,8 +7,57 @@
     src: url("../public/beleren.ttf");
 }
 
+*,
+*:before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    outline: none;
+    font-size: 1em;
+    line-height: 1.15em;
+
+    white-space: pre-line;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: auto;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif;
+
+    background-color: rgb(229, 229, 229);
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #312e81 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #312e81;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+}
+
 /*==========
-Extra TailwindCSS classes
+Extra utility classes
 ==========*/
 
 .rotate-y-180 {
@@ -16,7 +65,7 @@ Extra TailwindCSS classes
 }
 
 .reduced-width {
-    width: min(65em, 100%);
+    width: min(70em, 100%);
 }
 
 .card-grid {
@@ -47,6 +96,16 @@ Extra TailwindCSS classes
     background-image: linear-gradient(to right, #ccc 35%, #eee 50%, #ccc 65%);
     background-size: 600%;
     animation: placeholder 1s linear infinite;
+}
+
+@keyframes placeholder {
+    0% {
+        background-position: right;
+    }
+
+    100% {
+        background-position: left;
+    }
 }
 
 .bg-error {
@@ -128,7 +187,10 @@ Extra TailwindCSS classes
 
 .bg-icon,
 .search-icon,
-.cross-icon {
+.cross-icon,
+.tcg-icon,
+.mkm-icon,
+.ch-icon {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -152,61 +214,34 @@ Extra TailwindCSS classes
     border-radius: 100vmax;
 }
 
-@keyframes placeholder {
-    0% {
-        background-position: right;
-    }
-
-    100% {
-        background-position: left;
-    }
+.tcg-icon,
+.mkm-icon,
+.ch-icon {
+    height: 1.5em;
+    width: 1.5em;
 }
 
-*,
-*:before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    outline: none;
-    font-size: 1em;
-    line-height: 1.15em;
-
-    white-space: pre-line;
+.tcg-icon {
+    background-image: url("../assets/tcgicon.svg");
+}
+.mkm-icon {
+    background-image: url("../assets/mkmicon.svg");
+}
+.ch-icon {
+    background-image: url("../assets/chicon.svg");
 }
 
-html,
-body {
-    padding: 0;
-    margin: 0;
-    height: auto;
-    min-height: 100vh;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-        sans-serif;
-
-    background-color: rgb(229, 229, 229);
+.tcg-color {
+    color: #006885;
+    border-color: hsl(193, 100%, 36%);
 }
 
-/* ===== Scrollbar CSS ===== */
-/* Firefox */
-* {
-    scrollbar-width: auto;
-    scrollbar-color: #312e81 #ffffff;
+.mkm-color {
+    color: #551a8b;
+    border-color: hsl(271, 68%, 42%);
 }
 
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-    width: 12px;
-}
-
-*::-webkit-scrollbar-track {
-    background: #ffffff;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: #312e81;
-    border-radius: 10px;
-    border: 1px solid #ffffff;
+.ch-color {
+    color: #c45d30;
+    border-color: hsl(18, 61%, 58%);
 }

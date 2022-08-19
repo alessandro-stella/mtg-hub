@@ -52,7 +52,7 @@ export default function SingleCard({ cardData, rotate = false }) {
 
             <div>
                 <div className="flex flex-col gap-2 p-2 m-auto reduced-width lg:flex-row lg:items-start lg:justify-between">
-                    <div className="flex flex-col gap-2 lg:gap-0 lg:flex-row lg:flex-[2]">
+                    <div className="flex flex-col gap-2 lg:gap-0 lg:flex-row lg:flex-[2] ">
                         <div className="flex flex-col items-center lg:flex-1 lg:translate-x-2">
                             <div className="relative w-full min-h-[30em]">
                                 {isDoubleFaced ? (
@@ -103,8 +103,10 @@ export default function SingleCard({ cardData, rotate = false }) {
                     />
                 </div>
 
-                <BuyLinks data={cardData.purchase} />
-                <Prices data={cardData.prices} />
+                <div className="flex reduced-width m-auto">
+                    <BuyLinks data={cardData.purchase} />
+                    <Prices data={cardData.prices} />
+                </div>
             </div>
         </>
     );

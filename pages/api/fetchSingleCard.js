@@ -187,8 +187,6 @@ function formatPrices(pricesArray) {
             formattedKey = key.toUpperCase();
         }
 
-        console.log({ formattedKey });
-
         if (value) {
             switch (true) {
                 case key.includes("eur"):
